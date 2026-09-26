@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database Service
+  postgres:
+    image: postgres:16-alpine
+    container_name: packwise_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-packwise_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-packwise_password}
+      POSTGRES_DB: ${POSTGRES_DB:-packwise_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-packwise_user} -d ${POSTGRES_DB:-packwise_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - packwise_net
+
+  # 2. FastAPI Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: packwise_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DEBUG: ${DEBUG:-false}
+      SERVICE_NAME: ${SERVICE_NAME:-foodpack-api}
+      API_PREFIX: ${API_PREFIX:-/api/v1}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-packwise_user}:${POSTGRES_PASSWORD:-packwise_password}@postgres:5432/${POSTGRES_DB:-packwise_db}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}
+      MODEL_DIR: ${MODEL_DIR:-/app/ml/models}
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - packwise_net
+
+  # 3. React Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: packwise_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api/v1}
+    ports:
+      - "5173:80"
+    networks:
+      - packwise_net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  packwise_net:
+    driver: bridge
