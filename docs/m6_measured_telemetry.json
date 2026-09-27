@@ -1,0 +1,38 @@
+{
+  "health": {
+    "iterations": 10,
+    "min_ms": 2.77,
+    "max_ms": 3.9,
+    "avg_ms": 3.5
+  },
+  "readiness": {
+    "iterations": 10,
+    "min_ms": 28.28,
+    "max_ms": 140.17,
+    "avg_ms": 52.09
+  },
+  "commodities": {
+    "iterations": 10,
+    "min_ms": 30.18,
+    "max_ms": 139.91,
+    "avg_ms": 42.15
+  },
+  "materials": {
+    "iterations": 10,
+    "min_ms": 29.98,
+    "max_ms": 138.25,
+    "avg_ms": 42.43
+  },
+  "recommendations": {
+    "iterations": 10,
+    "min_ms": 30.51,
+    "max_ms": 135.98,
+    "avg_ms": 44.66
+  },
+  "history": {
+    "iterations": 10,
+    "min_ms": 3.2,
+    "max_ms": 4.83,
+    "avg_ms": 3.77
+  }
+}

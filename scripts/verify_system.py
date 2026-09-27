@@ -203,7 +203,7 @@ def main():
     print(f"         Deterministic reproducibility, NO_ELIGIBLE_MATERIAL rejection summary, and audit metadata confirmed.")
 
     # 9. Check M5 Production Hardening, Subsystem Readiness & Audit Trail
-    print("\n[9/9] Verifying M5 Production Hardening, Readiness & Audit Trail...")
+    print("\n[9/10] Verifying M5 Production Hardening, Readiness & Audit Trail...")
     # 9a. Readiness Check
     res_ready = client.get("/api/v1/readiness")
     assert res_ready.status_code == 200
@@ -236,8 +236,30 @@ def main():
 
     print("  [PASS] M5 Readiness, Security Headers, Request ID, Catalog & History verified.")
 
+    # 10. Check M6 Observability, Latency Telemetry & Determinism
+    print("\n[10/10] Verifying M6 Observability, Latency Telemetry & Determinism...")
+    # Latency telemetry header inspection
+    proc_time_ms = float(res_ready.headers["X-Process-Time-Ms"])
+    assert proc_time_ms > 0.0, f"Expected process time > 0, got {proc_time_ms}"
+
+    # Scientific determinism verification
+    req_det = {
+        "commodity_name": "Strawberry",
+        "storage_conditions": {
+            "storage_temperature_c": 4.0,
+            "ambient_rh_percent": 90.0,
+            "target_shelf_life_days": 7
+        }
+    }
+    det_1 = client.post("/api/v1/recommendations", json=req_det).json()
+    det_2 = client.post("/api/v1/recommendations", json=req_det).json()
+    assert det_1["primary_recommendation"]["code"] == det_2["primary_recommendation"]["code"]
+    assert det_1["candidate_rankings"][0]["topsis_score"] == det_2["candidate_rankings"][0]["topsis_score"]
+    assert det_1["ml_status"] == "INSUFFICIENT_VERIFIED_DATA"
+    print(f"  [PASS] M6 Observability telemetry ({proc_time_ms:.2f}ms), tracing, and mathematical determinism verified.")
+
     print("\n" + "=" * 70)
-    print("ALL MILESTONE M0 - M5 SYSTEM CHECKS PASSED SUCCESSFULLY!")
+    print("ALL MILESTONE M0 - M6 SYSTEM CHECKS PASSED SUCCESSFULLY!")
     print("Zero fabricated data. Zero fake metrics. Strict anti-fabrication verified.")
     print("=" * 70)
     return 0
@@ -245,4 +267,5 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
 
