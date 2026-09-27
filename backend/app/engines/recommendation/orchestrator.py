@@ -46,8 +46,12 @@ class RecommendationOrchestrator:
         self.map_selector = EmpiricalMAPSelector()
         self.requirement_extractor = FoodRequirementExtractor()
 
-    def process_recommendation_request(self, request: RecommendationRequest) -> RecommendationResponse:
-        request_id = str(uuid.uuid4())
+    def process_recommendation_request(
+        self, 
+        request: RecommendationRequest,
+        request_id: Optional[str] = None
+    ) -> RecommendationResponse:
+        request_id = request_id or str(uuid.uuid4())
         now = datetime.now(timezone.utc)
 
         # ---------------------------------------------------------------------

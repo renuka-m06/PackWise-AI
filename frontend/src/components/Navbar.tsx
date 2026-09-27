@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { PackageCheck, Activity, Layers, Cpu, Compass } from 'lucide-react';
+import { PackageCheck, Activity, Layers, Cpu, Compass, History } from 'lucide-react';
 import { useApiHealth } from '../hooks/useApiHealth';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
-  const { isOnline, isLoading, data } = useApiHealth(15000);
+  const { isOnline, isLoading } = useApiHealth(15000);
 
   const navLinks = [
-    { to: '/', label: 'Overview', icon: Compass },
-    { to: '/recommend', label: 'Recommendation Form', icon: PackageCheck },
-    { to: '/catalog', label: 'Entities & Catalog', icon: Layers },
-    { to: '/architecture', label: 'Engine Architecture', icon: Cpu },
+    { to: '/', label: 'Dashboard', icon: Compass },
+    { to: '/recommend', label: 'Recommend', icon: PackageCheck },
+    { to: '/materials', label: 'Materials', icon: Layers },
+    { to: '/history', label: 'History', icon: History },
+    { to: '/architecture', label: 'How It Works', icon: Cpu },
+    { to: '/status', label: 'System Status', icon: Activity },
   ];
 
   return (
@@ -29,7 +31,7 @@ export const Navbar: React.FC = () => {
                   PackWise <span className="text-brand-400 font-mono">AI</span>
                 </span>
                 <span className="text-[10px] bg-brand-500/10 text-brand-400 border border-brand-500/30 px-1.5 py-0.5 rounded font-mono font-semibold">
-                  SIH-2026
+                  M5 Production
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 hidden sm:block">
@@ -39,7 +41,7 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = location.pathname === link.to;
@@ -47,7 +49,7 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                     isActive
                       ? 'bg-slate-800 text-brand-400 border border-slate-700'
                       : 'text-slate-300 hover:text-white hover:bg-slate-850'
@@ -60,17 +62,18 @@ export const Navbar: React.FC = () => {
             })}
           </nav>
 
-          {/* Live API Health Status */}
-          <div className="flex items-center gap-3">
-            <div 
-              className={`flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border ${
+          {/* Live API Health & Readiness Status */}
+          <div className="flex items-center gap-2">
+            <Link
+              to="/status"
+              className={`flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-mono border transition-all ${
                 isLoading
                   ? 'bg-slate-800 text-slate-400 border-slate-700'
                   : isOnline
-                  ? 'bg-brand-950/80 text-brand-300 border-brand-500/40 shadow-sm shadow-brand-500/20'
+                  ? 'bg-brand-950/80 text-brand-300 border-brand-500/40 hover:bg-brand-900/60 shadow-sm shadow-brand-500/20'
                   : 'bg-rose-950/80 text-rose-300 border-rose-500/40'
               }`}
-              title={isOnline ? `Connected to ${data?.service || 'backend'} (v1)` : 'Backend is currently offline'}
+              title="Click to view live subsystem readiness diagnostics"
             >
               <span className={`w-2 h-2 rounded-full ${
                 isLoading 
@@ -81,9 +84,9 @@ export const Navbar: React.FC = () => {
               }`} />
               <Activity className="w-3 h-3" />
               <span className="hidden sm:inline">
-                {isLoading ? 'Checking API...' : isOnline ? 'API: Healthy' : 'API: Disconnected'}
+                {isLoading ? 'Checking...' : isOnline ? 'System: Online' : 'System: Offline'}
               </span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
+import math
 from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, model_validator, field_validator
 from app.schemas.storage_condition import StorageConditionBase
 from app.schemas.material import PackagingMaterialResponse
 from app.schemas.map_composition import MAPCompositionResponse
@@ -13,12 +14,38 @@ class RecommendationConstraints(BaseModel):
     require_high_moisture_barrier: bool = Field(default=False)
     require_high_oxygen_barrier: bool = Field(default=False)
 
+    @field_validator("max_acceptable_cost_index", mode="before")
+    @classmethod
+    def validate_cost_index(cls, v):
+        if v is not None:
+            val = float(v)
+            if not math.isfinite(val):
+                raise ValueError("max_acceptable_cost_index must be a finite number")
+            return val
+        return v
+
 
 class MCDMWeights(BaseModel):
     shelf_life_weight: float = Field(default=0.35, ge=0.0, le=1.0)
     barrier_performance_weight: float = Field(default=0.25, ge=0.0, le=1.0)
     sustainability_weight: float = Field(default=0.25, ge=0.0, le=1.0)
     cost_efficiency_weight: float = Field(default=0.15, ge=0.0, le=1.0)
+
+    @field_validator(
+        "shelf_life_weight",
+        "barrier_performance_weight",
+        "sustainability_weight",
+        "cost_efficiency_weight",
+        mode="before"
+    )
+    @classmethod
+    def validate_finite_weight(cls, v):
+        val = float(v)
+        if not math.isfinite(val):
+            raise ValueError("Weights must be finite numbers (NaN and Infinity are prohibited)")
+        if val < 0.0 or val > 1.0:
+            raise ValueError("Weight must be between 0.0 and 1.0")
+        return val
 
     @model_validator(mode="after")
     def validate_weights(self):
@@ -47,6 +74,13 @@ class RecommendationRequest(BaseModel):
     storage_conditions: StorageConditionBase
     constraints: RecommendationConstraints = Field(default_factory=RecommendationConstraints)
     weights: MCDMWeights = Field(default_factory=MCDMWeights)
+
+    @field_validator("commodity_name", mode="before")
+    @classmethod
+    def sanitize_commodity_name(cls, v: str) -> str:
+        if not isinstance(v, str) or not v.strip():
+            raise ValueError("commodity_name cannot be empty or pure whitespace")
+        return v.strip()
 
 
 class RuleFilterResult(BaseModel):
@@ -100,3 +134,18 @@ class RecommendationResponse(BaseModel):
     ml_model_version: Optional[str] = None
     rejection_summary: Optional[dict] = None
     audit_metadata: Optional[dict] = None
+
+
+class RecommendationHistoryItem(BaseModel):
+    request_id: str
+    timestamp: datetime
+    commodity_name: str
+    storage_temperature_c: float
+    ambient_rh_percent: float
+    target_shelf_life_days: float
+    primary_material_name: Optional[str] = None
+    primary_polymer_type: Optional[str] = None
+    topsis_score: Optional[float] = None
+    recommendation_status: str
+    rule_engine_status: str
+    ml_status: str

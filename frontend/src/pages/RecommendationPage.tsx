@@ -98,10 +98,10 @@ export const RecommendationPage: React.FC = () => {
       <div>
         <div className="flex items-center gap-2 mb-2">
           <Badge variant="brand" size="md">
-            Milestone M4
+            Milestone M5
           </Badge>
           <Badge variant="brand" size="md">
-            Scientific Decision Engine
+            Production Decision Engine
           </Badge>
           <Badge variant="amber" size="md">
             Zero Fake Predictions
@@ -159,6 +159,13 @@ export const RecommendationPage: React.FC = () => {
                     className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
                     required
                   />
+                  <div className="mt-1.5 flex items-center gap-1.5">
+                    {VERIFIED_COMMODITIES.some(c => c.name.toLowerCase() === formData.commodity_name.trim().toLowerCase()) ? (
+                      <span className="text-[10px] text-emerald-400 font-medium">✓ Verified empirical postharvest commodity in repository</span>
+                    ) : (
+                      <span className="text-[10px] text-amber-400 font-medium">⚠ Verified empirical data is not available for this commodity (engines will disarm safely).</span>
+                    )}
+                  </div>
                 </div>
 
                 <div>
@@ -298,6 +305,9 @@ export const RecommendationPage: React.FC = () => {
 
             {/* 4. Multi-Criteria TOPSIS Weights */}
             <Card title="4. Decision Preferences (TOPSIS)" subtitle="Relative multi-attribute ranking weights">
+              <div className="p-2.5 mb-3 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400">
+                <strong className="text-slate-300">Decision Policy:</strong> Preferences influence ranking weights only and cannot override mandatory scientific safety rules.
+              </div>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
                   <label className="text-slate-400 block mb-1">Shelf-Life (w₁)</label>

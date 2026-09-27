@@ -360,8 +360,17 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Maintained strict anti-fabrication mandate: `ML_STATUS = "INSUFFICIENT_VERIFIED_DATA"`, zero fake shelf-life days, zero fake ML confidence scores.
   - Upgraded React UI with real-time pipeline execution telemetry, primary recommendation hero card, multi-material comparison matrix, and interactive evidence graph explorer.
   - Added 9 comprehensive M4 automated tests (88 total automated tests passing in 2.96s).
-- [ ] **Milestone M5: Production Backend, Frontend UX, Explainability & Deployment Hardening**
-  - Advanced package headspace respiration-permeation dynamic equilibrium solver.
-  - Enhanced frontend comparison UX, PDF report export, and interactive weight sensitivity tuning.
-  - PostgreSQL production connection pooling, Redis caching, and audit logging.
-  - Full Docker Compose containerization and deployment hardening.
+- [x] **Milestone M5: Production Backend, Frontend UX, Explainability & Deployment Hardening** *(Completed)*
+  - Production backend hardening: Security headers (`nosniff`, `DENY`, `XSS`, `Referrer-Policy`), CORS configuration, and structured logging.
+  - Request ID distributed tracing (`X-Request-ID`) and latency telemetry (`X-Process-Time-Ms`).
+  - Separation of Liveness (`/api/v1/health`) vs. Subsystem Readiness (`/api/v1/readiness`) across API, Database, Empirical Dataset, Rule Engine, TOPSIS, and ML data-gating.
+  - Resilient audit trail persistence: PostgreSQL persistence with automatic in-memory ring-buffer fallback.
+  - Production catalog endpoints: single material (`/materials/{id}`) and commodity (`/commodities/{id}`) profiles.
+  - Production React UI: 6-step guided recommendation workflow, Dashboard live telemetry, searchable Material Catalog, System Status monitor, and History audit inspector.
+  - Zero-leakage error handling: unified error envelope shielding database paths, tracebacks, and internals.
+  - Added 12 comprehensive M5 automated tests (100 total automated tests passing in 4.24s).
+- [ ] **Milestone M6: Deployment, Observability, SIH Demonstration & Final Production Validation**
+  - Production containerization & cloud deployment runtime validation.
+  - OpenTelemetry and Prometheus observability integration.
+  - End-to-end user evaluation and final SIH competition live demonstration hardening.
+

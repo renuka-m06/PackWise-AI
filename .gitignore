@@ -8,6 +8,9 @@
 .env.*.local
 *.pem
 *.key
+*.secret
+credentials
+credentials.json
 
 # Python
 __pycache__/

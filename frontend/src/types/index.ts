@@ -168,3 +168,33 @@ export interface ApiHealthResponse {
   version?: string;
   environment?: string;
 }
+
+export interface ComponentReadiness {
+  status: string;
+  message: string;
+  details?: Record<string, any>;
+}
+
+export interface ReadinessResponse {
+  status: string;
+  service: string;
+  version: string;
+  timestamp: string;
+  components: Record<string, ComponentReadiness>;
+}
+
+export interface RecommendationHistoryItem {
+  request_id: string;
+  timestamp: string;
+  commodity_name: string;
+  storage_temperature_c: number;
+  ambient_rh_percent: number;
+  target_shelf_life_days: number;
+  primary_material_name?: string;
+  primary_polymer_type?: string;
+  topsis_score?: number;
+  recommendation_status: string;
+  rule_engine_status: string;
+  ml_status: string;
+}
+

@@ -28,3 +28,28 @@ def get_db() -> Generator[Session, None, None]:
         raise
     finally:
         db.close()
+
+
+def get_db_optional() -> Generator[Session | None, None, None]:
+    """
+    FastAPI dependency yielding database session if database is accessible,
+    or None if offline or in testing fallback mode.
+    """
+    db = None
+    try:
+        db = SessionLocal()
+    except Exception as e:
+        logger.debug(f"Optional DB session initialization failed: {e}")
+        yield None
+        return
+
+    try:
+        yield db
+    except Exception:
+        if db is not None:
+            db.rollback()
+        raise
+    finally:
+        if db is not None:
+            db.close()
+

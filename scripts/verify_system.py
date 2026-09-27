@@ -202,8 +202,42 @@ def main():
     print(f"         TOPSIS Closeness: {m4_a['candidate_rankings'][0]['topsis_score']}")
     print(f"         Deterministic reproducibility, NO_ELIGIBLE_MATERIAL rejection summary, and audit metadata confirmed.")
 
+    # 9. Check M5 Production Hardening, Subsystem Readiness & Audit Trail
+    print("\n[9/9] Verifying M5 Production Hardening, Readiness & Audit Trail...")
+    # 9a. Readiness Check
+    res_ready = client.get("/api/v1/readiness")
+    assert res_ready.status_code == 200
+    ready_data = res_ready.json()
+    assert ready_data["status"] in ("READY", "DEGRADED")
+    assert ready_data["components"]["api"]["status"] == "READY"
+    assert ready_data["components"]["rule_engine"]["status"] == "READY"
+    assert ready_data["components"]["topsis"]["status"] == "READY"
+    assert ready_data["components"]["ml"]["status"] == "DATA_GATED"
+
+    # 9b. Security Headers & Request ID
+    assert res_ready.headers.get("X-Content-Type-Options") == "nosniff"
+    assert res_ready.headers.get("X-Frame-Options") == "DENY"
+    assert "X-Request-ID" in res_ready.headers
+    assert "X-Process-Time-Ms" in res_ready.headers
+
+    # 9c. Catalog single item lookup
+    mat_res = client.get("/api/v1/materials/PET-25")
+    assert mat_res.status_code == 200
+    assert mat_res.json()["code"] == "PET-25"
+
+    com_res = client.get("/api/v1/commodities/Strawberry")
+    assert com_res.status_code == 200
+    assert com_res.json()["name"] == "Strawberry"
+
+    # 9d. Recommendation History Lookup
+    hist_res = client.get("/api/v1/recommendations/history")
+    assert hist_res.status_code == 200
+    assert isinstance(hist_res.json(), list)
+
+    print("  [PASS] M5 Readiness, Security Headers, Request ID, Catalog & History verified.")
+
     print("\n" + "=" * 70)
-    print("ALL MILESTONE M0, M1, M2, M3, AND M4 SYSTEM CHECKS PASSED SUCCESSFULLY!")
+    print("ALL MILESTONE M0 - M5 SYSTEM CHECKS PASSED SUCCESSFULLY!")
     print("Zero fabricated data. Zero fake metrics. Strict anti-fabrication verified.")
     print("=" * 70)
     return 0
@@ -211,3 +245,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
