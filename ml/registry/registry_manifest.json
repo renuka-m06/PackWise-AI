@@ -1,0 +1,28 @@
+{
+  "models": {
+    "shelf_life_regression_1_0_0-m3": {
+      "model_id": "shelf_life_regression_1_0_0-m3",
+      "model_name": "Shelf Life Regressor (Empirical Candidate)",
+      "model_version": "m3.0.0",
+      "task": "shelf_life_regression",
+      "algorithm": "XGBoost / HistGradientBoosting",
+      "dataset_version": "1.0.0-m3",
+      "feature_schema_version": "m3.0.0",
+      "training_date": "2026-09-27T08:57:59.655939+00:00",
+      "status": "BLOCKED",
+      "metrics": {
+        "status": "BLOCKED",
+        "reason": "INSUFFICIENT_VERIFIED_DATA",
+        "blocking_reasons": [
+          "Sample count (37) is below statistical minimum (100) for gradient-boosted ML regression.",
+          "Valid targets count (37) is insufficient or variance (1257.8656) is non-informative.",
+          "Unique entity groups (16) is below requirement (20), risking group-level overfitting."
+        ]
+      },
+      "artifact_path": null,
+      "checksum_sha256": null,
+      "hyperparameters": {},
+      "notes": "Training blocked by Data Sufficiency Gate: Sample count (37) is below statistical minimum (100) for gradient-boosted ML regression.; Valid targets count (37) is insufficient or variance (1257.8656) is non-informative.; Unique entity groups (16) is below requirement (20), risking group-level overfitting."
+    }
+  }
+}

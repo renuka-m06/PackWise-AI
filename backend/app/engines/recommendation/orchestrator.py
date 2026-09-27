@@ -55,6 +55,10 @@ class RecommendationOrchestrator:
                 request_id=request_id,
                 timestamp=now,
                 status="PENDING_ENGINES",
+                rule_engine_status="NOT_RUN",
+                ml_status="INSUFFICIENT_VERIFIED_DATA",
+                topsis_status="NOT_RUN",
+                recommendation_status="DISARMED_UNVERIFIED",
                 message=(
                     f"Commodity '{request.commodity_name}' was not found in the verified empirical repository. "
                     "In strict accordance with the anti-fabrication policy, recommendation engines remain "
@@ -120,6 +124,10 @@ class RecommendationOrchestrator:
                 request_id=request_id,
                 timestamp=now,
                 status="NO_ELIGIBLE_MATERIAL",
+                rule_engine_status="COMPLETED",
+                ml_status="INSUFFICIENT_VERIFIED_DATA",
+                topsis_status="NOT_RUN",
+                recommendation_status="NO_ELIGIBLE_MATERIAL",
                 message=(
                     f"All {len(all_materials)} candidate packaging materials were eliminated by mandatory "
                     "safety or barrier constraints. Zero materials passed deterministic rule screening."
@@ -271,10 +279,14 @@ class RecommendationOrchestrator:
             request_id=request_id,
             timestamp=now,
             status="COMPLETED",
+            rule_engine_status="COMPLETED",
+            ml_status="INSUFFICIENT_VERIFIED_DATA",
+            topsis_status="COMPLETED",
+            recommendation_status="AVAILABLE_WITHOUT_ML",
             message=(
-                f"Milestone M2 Scientific Recommendation Engine completed: {len(eligible_materials)} of "
+                f"Milestone M2/M3 Scientific Recommendation Engine completed: {len(eligible_materials)} of "
                 f"{len(all_materials)} materials eligible after deterministic rule screening. "
-                "Ranked via TOPSIS MCDM. Zero synthetic records. ML model training intentionally deferred."
+                "Ranked via TOPSIS MCDM. ML model status: INSUFFICIENT_VERIFIED_DATA."
             ),
             recommended_material=recommended_material,
             suggested_map=suggested_map,

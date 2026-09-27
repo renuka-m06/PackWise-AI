@@ -1,0 +1,14 @@
+{
+  "dataset_name": "shelf_life_empirical_dataset",
+  "dataset_version": "1.0.0-m3",
+  "source_dataset_version": "1.0.0-M1",
+  "created_at": "2026-09-27T09:02:22.917795+00:00",
+  "feature_schema_version": "m3.0.0",
+  "target_definition": "target_shelf_life_unpacked_days",
+  "processing_version": "m3.0.0",
+  "row_count": 37,
+  "feature_count": 29,
+  "unique_groups_count": 16,
+  "artifact_file": "shelf_life_empirical_v1.npz",
+  "checksum_sha256": "380f164c213e17ddd3f7fc74a35ac8f7ace79dca01f389f72486aa8a21074954"
+}

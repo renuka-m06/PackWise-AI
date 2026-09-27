@@ -69,11 +69,15 @@ class MaterialScoreResponse(BaseModel):
 class RecommendationResponse(BaseModel):
     """
     Contract schema for packaging recommendations.
-    In Milestone M0, returns status='PENDING_ENGINES' with explicit architectural notice.
+    Provides explicit visibility into deterministic rule, ML, and MCDM stages.
     """
     request_id: str
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     status: str = Field(default="PENDING_ENGINES", description="Pipeline status: PENDING_ENGINES, COMPLETED, FILTERED_OUT")
+    rule_engine_status: str = Field(default="COMPLETED", description="Rule engine status: COMPLETED, NOT_RUN")
+    ml_status: str = Field(default="INSUFFICIENT_VERIFIED_DATA", description="ML model status: INSUFFICIENT_VERIFIED_DATA, VALIDATED, NOT_AVAILABLE")
+    topsis_status: str = Field(default="COMPLETED", description="TOPSIS MCDM status: COMPLETED, NOT_RUN")
+    recommendation_status: str = Field(default="AVAILABLE_WITHOUT_ML", description="Recommendation status: AVAILABLE_WITHOUT_ML, DISARMED_UNVERIFIED, NO_ELIGIBLE_MATERIAL")
     message: str = Field(..., description="Status explanation regarding model & empirical data readiness")
     recommended_material: Optional[PackagingMaterialResponse] = None
     suggested_map: Optional[MAPCompositionResponse] = None

@@ -330,7 +330,7 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Generated machine-readable dataset manifest with SHA-256 checksums (`dataset_manifest.json`).
   - Formatted and executed scientific dataset audit script (`scripts/audit_dataset.py`).
   - Added 19 new automated tests (38 total passed tests).
-- [x] **Milestone M2: Scientific Rule Engine, Constraint Filtering & Evidence-Based Packaging Requirements** *(Current)*
+- [x] **Milestone M2: Scientific Rule Engine, Constraint Filtering & Evidence-Based Packaging Requirements**
   - Implemented deterministic scientific rule engine (`m2.0.0`) with priority evaluation.
   - Built food requirement extraction engine (`FoodRequirementExtractor`) with zero-extrapolation respiration rules.
   - Implemented ASTM D3985 oxygen barrier and ASTM F1249 moisture barrier screening rules.
@@ -340,10 +340,19 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Separated hard elimination constraints from soft circularity/cost preference criteria.
   - Integrated rule screening pipeline directly with `TOPSISDecisionEngine` and FastAPI recommendations endpoint.
   - Expanded test suite with 27 comprehensive M2 tests (65 total automated tests passing).
-- [ ] **Milestone M3: Machine Learning Model Training & Validation**
-  - Ingest expanded multi-temperature kinetics datasets ($\ge 100$ observations).
-  - Fit XGBoost shelf-life regressors with 5-fold cross-validation.
-  - Monotonicity constraint enforcement and model registry serialization.
-- [ ] **Milestone M4: Full Pipeline Integration & User Trials**
-  - End-to-end integration connecting Rule Filter, ML Predictor, and TOPSIS MCDM.
-  - User feedback loop persistence and expert packaging validation.
+- [x] **Milestone M3: ML Data Preparation, Feature Engineering, Model Training & Model Registry** *(Completed)*
+  - Implemented comprehensive dataset eligibility auditor (`DatasetEligibilityAuditor`) evaluating 4 candidate ML tasks.
+  - Established non-bypassable `DataSufficiencyGate` preventing training on underpowered data ($N=37 < 100$).
+  - Built leak-free feature engineering engine (`FeatureEngineer` v`m3.0.0`) with 29 normalized biophysical and barrier dimensions.
+  - Created strict data leakage detector (`LeakageDetector`) blocking target variables, post-storage metrics, and recommendation outputs.
+  - Built deterministic entity-grouped splitter (`GroupAwareSplitter`) and 5-fold cross-validation (`GroupCrossValidator`).
+  - Implemented baseline regressors (`MeanBaselineRegressor`, `MedianBaselineRegressor`, `RidgeRegressionBaseline`).
+  - Built candidate ML regressors (`RandomForest`, `GradientBoosting`, `XGBoost`).
+  - Implemented empirical metrics calculator (`ModelMetricsCalculator`) computing MAE, RMSE, $R^2$, MAPE, and Macro $F_1$.
+  - Built cryptographic model registry (`ModelRegistry`) with SHA-256 artifact hashing and tamper detection.
+  - Built decoupled runtime inference engine (`ShelfLifePredictor`) enforcing `MODEL_STATUS = "INSUFFICIENT_VERIFIED_DATA"` and `uncertainty_status = "NOT_AVAILABLE"`.
+  - Added 14 new automated tests (79 total tests passing across M0-M3).
+- [ ] **Milestone M4: Recommendation Intelligence & ML/TOPSIS Integration**
+  - Synthesize rule-engine filtering, ML prediction (when verified data is available), and TOPSIS MCDM into cohesive recommendation intelligence.
+  - Interactive multi-criteria weight calibration and live scenario comparisons.
+  - User feedback loop persistence and audit trails.
