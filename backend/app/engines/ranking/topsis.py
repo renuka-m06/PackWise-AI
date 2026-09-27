@@ -1,5 +1,16 @@
-from typing import List, Dict, Any, Tuple
+from dataclasses import dataclass
+from typing import List, Dict, Any, Tuple, Optional
 import numpy as np
+
+
+@dataclass
+class TOPSISCriterion:
+    criterion_id: str
+    name: str
+    unit: str
+    direction: str  # "BENEFIT" or "COST"
+    default_weight: float
+    source_basis: str
 
 
 class TOPSISDecisionEngine:
@@ -7,10 +18,52 @@ class TOPSISDecisionEngine:
     Technique for Order of Preference by Similarity to Ideal Solution (TOPSIS).
     A rigorous Multi-Criteria Decision Making (MCDM) method to rank candidate materials
     based on relative closeness to an Ideal Best solution and distance from an Ideal Worst solution.
+    Configured for Milestone M4 with full auditability, benefit/cost directions, and normalization safeguards.
     """
+    CONFIG_VERSION = "m4.0.0"
 
-    @staticmethod
+    DEFAULT_CRITERIA = [
+        TOPSISCriterion(
+            criterion_id="CRIT-SHELF-LIFE",
+            name="Shelf-Life / Oxygen Barrier Efficacy",
+            unit="Index (0-10)",
+            direction="BENEFIT",
+            default_weight=0.35,
+            source_basis="Logarithmic OTR scale (ASTM D3985 standard test at 23°C, 0% RH)"
+        ),
+        TOPSISCriterion(
+            criterion_id="CRIT-BARRIER",
+            name="Overall Barrier Index",
+            unit="Score (0-10)",
+            direction="BENEFIT",
+            default_weight=0.25,
+            source_basis="Combined logarithmic oxygen and water vapor transmission efficacy (ASTM D3985 & F1249)"
+        ),
+        TOPSISCriterion(
+            criterion_id="CRIT-SUSTAINABILITY",
+            name="Sustainability & Circularity Score",
+            unit="Score (1-10)",
+            direction="BENEFIT",
+            default_weight=0.25,
+            source_basis="Biodegradability standard, polymer recyclability code, and cradle-to-gate carbon footprint"
+        ),
+        TOPSISCriterion(
+            criterion_id="CRIT-COST",
+            name="Relative Material Cost Index",
+            unit="Relative Index",
+            direction="COST",
+            default_weight=0.15,
+            source_basis="Relative polymer resin pricing (baseline LDPE = 1.0)"
+        )
+    ]
+
+    @classmethod
+    def get_default_criteria(cls) -> List[TOPSISCriterion]:
+        return list(cls.DEFAULT_CRITERIA)
+
+    @classmethod
     def rank_candidates(
+        cls,
         decision_matrix: np.ndarray,
         weights: np.ndarray,
         benefit_criteria_mask: np.ndarray,
@@ -18,66 +71,86 @@ class TOPSISDecisionEngine:
     ) -> List[Dict[str, Any]]:
         """
         Calculates TOPSIS rankings for candidate materials.
+        Preserves backward-compatible signature.
+        """
+        audit_res = cls.rank_candidates_with_audit(
+            decision_matrix=decision_matrix,
+            weights=weights,
+            benefit_criteria_mask=benefit_criteria_mask,
+            candidate_ids=candidate_ids
+        )
+        return audit_res["rankings"]
 
-        Parameters:
-        -----------
-        decision_matrix : np.ndarray (shape: m x n)
-            Rows (m) = candidate alternatives
-            Columns (n) = criteria (e.g. [Shelf-Life, Barrier Index, Sustainability Score, Cost Index])
-        weights : np.ndarray (shape: n,)
-            Weight assigned to each criterion. Normalized if sum != 1.
-        benefit_criteria_mask : np.ndarray (shape: n, dtype=bool)
-            True if higher value is preferred (benefit criterion like shelf life, eco score).
-            False if lower value is preferred (cost criterion like OTR, WVTR, material cost).
-        candidate_ids : List[str]
-            List of unique identifiers corresponding to each row.
-
-        Returns:
-        --------
-        List[Dict[str, Any]]
-            Ranked list sorted by closeness score C* descending:
-            [{"id": "...", "topsis_score": 0.824, "rank": 1, ...}]
+    @classmethod
+    def rank_candidates_with_audit(
+        cls,
+        decision_matrix: np.ndarray,
+        weights: np.ndarray,
+        benefit_criteria_mask: np.ndarray,
+        candidate_ids: List[str]
+    ) -> Dict[str, Any]:
+        """
+        Calculates TOPSIS rankings and returns complete mathematical audit trails
+        including normalized matrix, weighted matrix, ideal vectors, and status.
         """
         matrix = np.array(decision_matrix, dtype=float)
         m, n = matrix.shape
 
         if m == 0:
-            return []
+            return {
+                "rankings": [],
+                "topsis_status": "INSUFFICIENT_DATA",
+                "message": "Zero candidates provided to TOPSIS decision matrix.",
+                "audit": {}
+            }
 
         if len(weights) != n or len(benefit_criteria_mask) != n:
-            raise ValueError(f"Criteria count mismatch: matrix has {n} columns, but weights={len(weights)}, mask={len(benefit_criteria_mask)}")
+            raise ValueError(
+                f"Criteria count mismatch: matrix has {n} columns, but weights={len(weights)}, "
+                f"mask={len(benefit_criteria_mask)}"
+            )
 
         if len(candidate_ids) != m:
             raise ValueError(f"Candidate IDs length ({len(candidate_ids)}) does not match alternatives count ({m})")
 
-        # Handle single candidate edge case
+        # Handle single candidate edge case safely (Section 25)
         if m == 1:
-            return [{
+            single_result = [{
                 "id": candidate_ids[0],
                 "topsis_score": 1.0,
                 "rank": 1,
                 "distance_positive": 0.0,
                 "distance_negative": 1.0,
             }]
+            return {
+                "rankings": single_result,
+                "topsis_status": "COMPLETED",
+                "message": "Single eligible candidate survived rule screening; ranked #1 without competing alternatives.",
+                "audit": {
+                    "candidate_count": 1,
+                    "criteria_count": n,
+                    "single_candidate": True
+                }
+            }
 
         # 1. Normalize Weights to sum to 1.0
         norm_weights = np.array(weights, dtype=float)
         w_sum = np.sum(norm_weights)
         if w_sum > 0:
             norm_weights = norm_weights / w_sum
+        else:
+            norm_weights = np.ones(n) / float(n)
 
         # 2. Vector Normalization: r_ij = x_ij / sqrt(sum(x_kj^2))
         col_norms = np.sqrt(np.sum(matrix ** 2, axis=0))
         # Protect against division by zero for constant zero columns
-        col_norms[col_norms == 0] = 1.0
+        col_norms = np.where(col_norms == 0, 1.0, col_norms)
         normalized_matrix = matrix / col_norms
 
         # 3. Weighted Normalized Decision Matrix: v_ij = w_j * r_ij
         weighted_matrix = normalized_matrix * norm_weights
 
         # 4. Determine Positive-Ideal (A*) and Negative-Ideal (A-) Solutions
-        # For benefit criterion (True): A* is max, A- is min
-        # For cost criterion (False): A* is min, A- is max
         ideal_positive = np.zeros(n)
         ideal_negative = np.zeros(n)
 
@@ -115,4 +188,15 @@ class TOPSISDecisionEngine:
         for rank_idx, item in enumerate(results, 1):
             item["rank"] = rank_idx
 
-        return results
+        return {
+            "rankings": results,
+            "topsis_status": "COMPLETED",
+            "message": f"Successfully evaluated and ranked {m} eligible candidates across {n} criteria.",
+            "audit": {
+                "candidate_count": m,
+                "criteria_count": n,
+                "normalized_weights": [round(float(w), 4) for w in norm_weights],
+                "ideal_positive": [round(float(v), 4) for v in ideal_positive],
+                "ideal_negative": [round(float(v), 4) for v in ideal_negative]
+            }
+        }

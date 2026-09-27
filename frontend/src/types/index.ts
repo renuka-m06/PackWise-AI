@@ -48,15 +48,21 @@ export interface PackagingMaterial {
   recyclability_code: number;
   cost_index_relative: number; // 1.0 = baseline commodity polymer
   carbon_footprint_kg_co2_per_kg?: number;
+  description?: string;
+  food_contact_certified?: boolean;
+  biodegradation_standard?: string;
 }
 
 export interface MAPComposition {
   id: string;
-  name: string;
+  name?: string;
+  composition_name?: string;
+  description?: string;
   oxygen_pct: number;
   carbon_dioxide_pct: number;
   nitrogen_pct: number;
-  recommended_for_categories: CommodityCategory[];
+  target_application?: string;
+  recommended_for_categories?: CommodityCategory[];
 }
 
 export interface StorageConditions {
@@ -105,18 +111,55 @@ export interface MaterialScore {
   barrier_score: number;
   sustainability_score: number;
   cost_score: number;
+  otr_cc_m2_day_atm?: number;
+  wvtr_g_m2_day?: number;
+  thickness_micron?: number;
+  cost_index_relative?: number;
+  is_biodegradable?: boolean;
+  recyclability_code?: number;
+}
+
+export interface EvidenceNode {
+  rule_id: string;
+  food_property: string;
+  requirement: string;
+  rule_name?: string;
+  material_property: string;
+  result: string;
+  severity?: string;
+  reason?: string;
+  source_id?: string;
+  scientific_basis?: string;
 }
 
 export interface RecommendationResponse {
   request_id: string;
   timestamp: string;
-  status: 'PENDING_ENGINES' | 'COMPLETED' | 'FILTERED_OUT' | 'NOT_IMPLEMENTED';
+  status: 'PENDING_ENGINES' | 'COMPLETED' | 'FILTERED_OUT' | 'NO_ELIGIBLE_MATERIAL' | 'NOT_IMPLEMENTED';
+  rule_engine_status?: string;
+  ml_status?: string;
+  topsis_status?: string;
+  recommendation_status?: string;
   message: string;
   recommended_material?: PackagingMaterial;
+  primary_recommendation?: PackagingMaterial;
+  alternative_materials?: PackagingMaterial[];
   suggested_map?: MAPComposition;
   candidate_rankings?: MaterialScore[];
   applied_rules?: RuleFilterResult[];
+  evidence_graph?: EvidenceNode[];
   explanation?: string;
+  dataset_version?: string;
+  rule_engine_version?: string;
+  topsis_configuration_version?: string;
+  ml_model_version?: string | null;
+  rejection_summary?: {
+    evaluated_count: number;
+    eligible_count: number;
+    rejected_count: number;
+    primary_rejection_reasons: string[];
+  };
+  audit_metadata?: any;
 }
 
 export interface ApiHealthResponse {

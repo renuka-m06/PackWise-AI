@@ -64,23 +64,39 @@ class MaterialScoreResponse(BaseModel):
     barrier_score: float
     sustainability_score: float
     cost_score: float
+    otr_cc_m2_day_atm: Optional[float] = None
+    wvtr_g_m2_day: Optional[float] = None
+    thickness_micron: Optional[float] = None
+    cost_index_relative: Optional[float] = None
+    is_biodegradable: Optional[bool] = None
+    recyclability_code: Optional[int] = None
 
 
 class RecommendationResponse(BaseModel):
     """
-    Contract schema for packaging recommendations.
-    Provides explicit visibility into deterministic rule, ML, and MCDM stages.
+    Contract schema for packaging recommendations (Milestone M4).
+    Provides explicit visibility into deterministic rule, ML, and MCDM stages,
+    along with full evidence traces, alternative candidates, and version provenance.
     """
     request_id: str
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     status: str = Field(default="PENDING_ENGINES", description="Pipeline status: PENDING_ENGINES, COMPLETED, FILTERED_OUT")
     rule_engine_status: str = Field(default="COMPLETED", description="Rule engine status: COMPLETED, NOT_RUN")
     ml_status: str = Field(default="INSUFFICIENT_VERIFIED_DATA", description="ML model status: INSUFFICIENT_VERIFIED_DATA, VALIDATED, NOT_AVAILABLE")
-    topsis_status: str = Field(default="COMPLETED", description="TOPSIS MCDM status: COMPLETED, NOT_RUN")
-    recommendation_status: str = Field(default="AVAILABLE_WITHOUT_ML", description="Recommendation status: AVAILABLE_WITHOUT_ML, DISARMED_UNVERIFIED, NO_ELIGIBLE_MATERIAL")
+    topsis_status: str = Field(default="COMPLETED", description="TOPSIS MCDM status: COMPLETED, NOT_RUN, SINGLE_CANDIDATE, INSUFFICIENT_DATA")
+    recommendation_status: str = Field(default="AVAILABLE_WITHOUT_ML", description="Recommendation status: AVAILABLE, AVAILABLE_WITHOUT_ML, DISARMED_UNVERIFIED, NO_ELIGIBLE_MATERIAL, INSUFFICIENT_DATA")
     message: str = Field(..., description="Status explanation regarding model & empirical data readiness")
     recommended_material: Optional[PackagingMaterialResponse] = None
+    primary_recommendation: Optional[PackagingMaterialResponse] = None
+    alternative_materials: List[PackagingMaterialResponse] = Field(default_factory=list)
     suggested_map: Optional[MAPCompositionResponse] = None
     candidate_rankings: List[MaterialScoreResponse] = Field(default_factory=list)
     applied_rules: List[RuleFilterResult] = Field(default_factory=list)
+    evidence_graph: List[dict] = Field(default_factory=list)
     explanation: Optional[str] = None
+    dataset_version: str = Field(default="1.0.0-m3")
+    rule_engine_version: str = Field(default="m2.0.0")
+    topsis_configuration_version: str = Field(default="m4.0.0")
+    ml_model_version: Optional[str] = None
+    rejection_summary: Optional[dict] = None
+    audit_metadata: Optional[dict] = None

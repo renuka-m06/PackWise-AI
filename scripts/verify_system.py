@@ -29,11 +29,11 @@ if backend_path not in sys.path:
 
 def main():
     print("=" * 70)
-    print("PackWise AI - Verification Suite (Milestones M0 - M3)")
+    print("PackWise AI - Verification Suite (Milestones M0 - M4)")
     print("=" * 70)
 
     # 1. Verify Imports
-    print("\n[1/7] Verifying backend and ML pipeline imports...")
+    print("\n[1/8] Verifying backend and ML pipeline imports...")
     try:
         from app.main import app
         from app.core.config import settings
@@ -53,7 +53,7 @@ def main():
         return 1
 
     # 2. Check Health Endpoint Contract
-    print("\n[2/7] Verifying health check contract...")
+    print("\n[2/8] Verifying health check contract...")
     from fastapi.testclient import TestClient
     client = TestClient(app)
     response = client.get("/api/v1/health")
@@ -64,7 +64,7 @@ def main():
     print(f"  [PASS] /api/v1/health contract confirmed: {data['status']}")
 
     # 3. Check TOPSIS Engine
-    print("\n[3/7] Verifying TOPSIS MCDM mathematical engine...")
+    print("\n[3/8] Verifying TOPSIS MCDM mathematical engine...")
     import numpy as np
     matrix = np.array([[10.0, 1.0], [5.0, 2.0]])
     weights = np.array([0.7, 0.3])
@@ -76,7 +76,7 @@ def main():
     print("  [PASS] TOPSIS vector normalization and ranking verified.")
 
     # 4. Check M2 Recommendations Flow (Verified Strawberry)
-    print("\n[4/7] Verifying M2 recommendation flow with verified commodity...")
+    print("\n[4/8] Verifying M2 recommendation flow with verified commodity...")
     res = client.post("/api/v1/recommendations", json={
         "commodity_name": "Strawberry",
         "storage_conditions": {
@@ -95,7 +95,7 @@ def main():
     print(f"  [PASS] Recommendation completed: {res_data['recommended_material']['name']} (Rank #1, ml_status={res_data['ml_status']})")
 
     # 5. Check M3 ML Data Sufficiency Gate
-    print("\n[5/7] Verifying M3 ML Data Sufficiency Gate on empirical data...")
+    print("\n[5/8] Verifying M3 ML Data Sufficiency Gate on empirical data...")
     builder = MLDatasetBuilder(project_root)
     dataset = builder.build_shelf_life_dataset()
     gate_report = DataSufficiencyGate.evaluate_gates(
@@ -112,7 +112,7 @@ def main():
     print(f"         Blocking reasons: {len(gate_report.blocking_reasons)} gates tripped (Sample count N=37 < 100).")
 
     # 6. Check Model Registry SHA-256 Verification
-    print("\n[6/7] Verifying ML Dataset Manifest SHA-256 checksum...")
+    print("\n[6/8] Verifying ML Dataset Manifest SHA-256 checksum...")
     manifest_path = os.path.join(project_root, "ml", "data", "dataset_manifest.json")
     with open(manifest_path, "r", encoding="utf-8") as f:
         manifest = json.load(f)
@@ -122,7 +122,7 @@ def main():
     print(f"  [PASS] ML Dataset SHA-256 checksum matches manifest ({actual_hash[:16]}...).")
 
     # 7. Verify No Hardcoded Passwords / Secrets
-    print("\n[7/7] Verifying absence of hardcoded secret tokens...")
+    print("\n[7/8] Verifying absence of hardcoded secret tokens...")
     forbidden_patterns = [
         re.compile(r"api_key\s*=\s*['\"][a-zA-Z0-9_\-]{20,}['\"]", re.IGNORECASE),
         re.compile(r"secret_key\s*=\s*['\"][a-zA-Z0-9_\-]{20,}['\"]", re.IGNORECASE),
@@ -139,8 +139,71 @@ def main():
                             assert not pat.search(content), f"Potential secret found in {file}"
     print(f"  [PASS] Scanned {scan_count} source files. No hardcoded API keys/secrets discovered.")
 
+    # 8. Check M4 Recommendation Intelligence & End-to-End Decision Pipeline
+    print("\n[8/8] Verifying M4 Recommendation Intelligence & End-to-End Pipeline...")
+    res_m4_a = client.post("/api/v1/recommendations", json={
+        "commodity_name": "Strawberry",
+        "storage_conditions": {
+            "storage_temperature_c": 4.0,
+            "ambient_rh_percent": 90.0,
+            "target_shelf_life_days": 7
+        }
+    })
+    assert res_m4_a.status_code == 200
+    m4_a = res_m4_a.json()
+    assert m4_a["primary_recommendation"] is not None
+    assert len(m4_a["candidate_rankings"]) > 0
+    assert m4_a["candidate_rankings"][0]["rank"] == 1
+    assert m4_a["candidate_rankings"][0]["material_id"] == m4_a["primary_recommendation"]["code"]
+    assert m4_a["dataset_version"] == "1.0.0-m3"
+    assert m4_a["rule_engine_version"] == "m2.0.0"
+    assert m4_a["topsis_configuration_version"] == "m4.0.0"
+    assert m4_a["ml_model_version"] is None
+    assert m4_a["ml_status"] == "INSUFFICIENT_VERIFIED_DATA"
+    assert "evidence_graph" in m4_a and len(m4_a["evidence_graph"]) > 0
+    assert "audit_metadata" in m4_a
+    assert m4_a["audit_metadata"]["mcdm_engine"] == "TOPSIS"
+
+    # Test determinism: identical request produces identical recommendation
+    res_m4_b = client.post("/api/v1/recommendations", json={
+        "commodity_name": "Strawberry",
+        "storage_conditions": {
+            "storage_temperature_c": 4.0,
+            "ambient_rh_percent": 90.0,
+            "target_shelf_life_days": 7
+        }
+    })
+    m4_b = res_m4_b.json()
+    assert m4_a["primary_recommendation"]["id"] == m4_b["primary_recommendation"]["id"]
+    assert m4_a["candidate_rankings"][0]["topsis_score"] == m4_b["candidate_rankings"][0]["topsis_score"]
+
+    # Test rejection summary when no candidate satisfies extreme constraints
+    res_m4_none = client.post("/api/v1/recommendations", json={
+        "commodity_name": "Strawberry",
+        "storage_conditions": {
+            "storage_temperature_c": 4.0,
+            "ambient_rh_percent": 90.0,
+            "target_shelf_life_days": 7
+        },
+        "constraints": {
+            "prefer_biodegradable": True,
+            "strict_food_contact_grade": True,
+            "require_high_moisture_barrier": True,
+            "require_high_oxygen_barrier": True
+        }
+    })
+    assert res_m4_none.status_code == 200
+    m4_none = res_m4_none.json()
+    assert m4_none["recommendation_status"] == "NO_ELIGIBLE_MATERIAL"
+    assert m4_none["rejection_summary"] is not None
+    assert m4_none["rejection_summary"]["rejected_count"] > 0
+    assert m4_none["rejection_summary"]["eligible_count"] == 0
+    print(f"  [PASS] M4 End-to-End Pipeline confirmed: Primary '{m4_a['primary_recommendation']['name']}'")
+    print(f"         TOPSIS Closeness: {m4_a['candidate_rankings'][0]['topsis_score']}")
+    print(f"         Deterministic reproducibility, NO_ELIGIBLE_MATERIAL rejection summary, and audit metadata confirmed.")
+
     print("\n" + "=" * 70)
-    print("ALL MILESTONE M0, M1, M2, AND M3 SYSTEM CHECKS PASSED SUCCESSFULLY!")
+    print("ALL MILESTONE M0, M1, M2, M3, AND M4 SYSTEM CHECKS PASSED SUCCESSFULLY!")
     print("Zero fabricated data. Zero fake metrics. Strict anti-fabrication verified.")
     print("=" * 70)
     return 0

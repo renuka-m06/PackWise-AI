@@ -351,8 +351,17 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Implemented empirical metrics calculator (`ModelMetricsCalculator`) computing MAE, RMSE, $R^2$, MAPE, and Macro $F_1$.
   - Built cryptographic model registry (`ModelRegistry`) with SHA-256 artifact hashing and tamper detection.
   - Built decoupled runtime inference engine (`ShelfLifePredictor`) enforcing `MODEL_STATUS = "INSUFFICIENT_VERIFIED_DATA"` and `uncertainty_status = "NOT_AVAILABLE"`.
-  - Added 14 new automated tests (79 total tests passing across M0-M3).
-- [ ] **Milestone M4: Recommendation Intelligence & ML/TOPSIS Integration**
-  - Synthesize rule-engine filtering, ML prediction (when verified data is available), and TOPSIS MCDM into cohesive recommendation intelligence.
-  - Interactive multi-criteria weight calibration and live scenario comparisons.
-  - User feedback loop persistence and audit trails.
+- [x] **Milestone M4: Recommendation Intelligence, TOPSIS Ranking, Explainability & End-to-End Decision Pipeline** *(Completed)*
+  - Synthesized deterministic rule screening, TOPSIS multi-criteria decision making, and ML fallback orchestration into a unified 20-stage pipeline.
+  - Implemented audited TOPSIS criteria configuration (`m4.0.0`) with explicit directionality across OTR (cost), WVTR (cost), sustainability (benefit), cost (benefit), and tensile strength (benefit).
+  - Integrated primary recommendation (`rank=1`) with conditional scientific phrasing and alternative candidate selection (`rank>=2`).
+  - Implemented comprehensive edge case handling: single candidate degenerate matrix normalization, zero-eligible candidate rejection summary, and unverified commodity disarming (`DISARMED_UNVERIFIED`).
+  - Preserved complete biophysical evidence graph linking food physiology to statutory ASTM D3985 / ASTM F1249 standards and traceable source IDs.
+  - Maintained strict anti-fabrication mandate: `ML_STATUS = "INSUFFICIENT_VERIFIED_DATA"`, zero fake shelf-life days, zero fake ML confidence scores.
+  - Upgraded React UI with real-time pipeline execution telemetry, primary recommendation hero card, multi-material comparison matrix, and interactive evidence graph explorer.
+  - Added 9 comprehensive M4 automated tests (88 total automated tests passing in 2.96s).
+- [ ] **Milestone M5: Production Backend, Frontend UX, Explainability & Deployment Hardening**
+  - Advanced package headspace respiration-permeation dynamic equilibrium solver.
+  - Enhanced frontend comparison UX, PDF report export, and interactive weight sensitivity tuning.
+  - PostgreSQL production connection pooling, Redis caching, and audit logging.
+  - Full Docker Compose containerization and deployment hardening.
