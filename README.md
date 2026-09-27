@@ -278,36 +278,66 @@ cd frontend && npm run build
 
 ## 11. Data Provenance Policy (Anti-Fabrication Standard)
 
-In strict accordance with scientific integrity:
-- **No synthetic, invented, or fake datasets** are admitted into this repository.
-- Every empirical dataset must document:
-  - Source publication or official agency
-  - Source URL or scientific DOI
-  - Collection date
-  - Standardized physical units
-  - Explicit transformations applied
-  - Engineering assumptions
-  - License and usage rights
+## 11. Data Architecture & Governance Framework
+
+The PackWise AI data pipeline operates in six deterministic stages:
+
+```
+[ PRIMARY / TRACEABLE SOURCE ]
+             │
+             ▼
+[ RAW DATA (data/raw/) ]
+             │
+             ▼
+[ SOURCE PROVENANCE (data/provenance/) ]
+             │
+             ▼
+[ UNIT NORMALIZATION (backend/app/core/units.py) ]
+             │
+             ▼
+[ DATA QUALITY VALIDATION (backend/app/core/data_validation.py) ]
+             │
+             ▼
+[ PROCESSED DATA (data/processed/) ]
+             │
+             ▼
+[ POSTGRESQL PERSISTENCE (database/seeds/) ]
+```
+
+### Data Integrity Invariants
+- **No Synthetic Values**: Zero fake, simulated, or interpolated scientific parameters are accepted.
+- **Contextual Conditions**: Respiration measurements are strictly paired with temperature; barrier measurements (OTR, WVTR) are strictly paired with test temperature, RH %, and ASTM test methods.
+- **Audit Tool**: Run `python scripts/audit_dataset.py` to audit dataset counts, provenance coverage, and ML readiness.
 
 ---
 
 ## 12. Development Roadmap
 
-- [x] **Milestone M0: System Foundation & Architecture** *(Current)*
+- [x] **Milestone M0: System Foundation & Architecture**
   - Complete repository scaffolding and modular directory structure.
   - FastAPI v1 gateway with `/api/v1/health` and typed Pydantic v2 schemas.
   - Relational PostgreSQL schemas and Alembic migration versioning.
   - Rule-based filtering engine and TOPSIS mathematical decision engine.
   - Professional React + TypeScript + Tailwind CSS UI with live telemetry.
   - Docker Compose configuration, unit tests, and CI verification scripts.
-- [ ] **Milestone M1: Empirical Data Collection & Curation**
-  - Ingestion of peer-reviewed produce respiration kinetics (USDA Handbook 66).
-  - Curation of ASTM barrier transmission databases (OTR/WVTR).
-  - Validation of circularity metrics (biodegradability standards EN 13432, ASTM D6400).
-- [ ] **Milestone M2: Machine Learning Model Training & Validation**
-  - Fitting XGBoost shelf-life regressors with 5-fold cross-validation.
-  - Hyperparameter optimization and monotonicity constraint enforcement.
-  - Model serialization to registry with signed cryptographic metadata.
-- [ ] **Milestone M3: Full Pipeline Integration & User Trials**
+- [x] **Milestone M1: Empirical Data Foundation, Scientific Validation & Provenance** *(Current)*
+  - Curated 37 produce respiration kinetics from USDA Handbook No. 66 & UC Davis Postharvest.
+  - Ingested 15 verified packaging barrier materials (OTR/WVTR) from Robertson (2012), Massey (2003), and manufacturer TDS.
+  - Ingested 10 verified MAP equilibrium gas mixtures from Gorris & Peppelenbos (1992) and Sandhya (2010).
+  - Built deterministic scientific unit normalization engine (`UnitConverter`).
+  - Created automated data quality validator (`DataQualityValidator`) with physical bounds checks.
+  - Built idempotent, transaction-safe database seeding script (`database/seeds/seed_m1_data.py`).
+  - Generated machine-readable dataset manifest with SHA-256 checksums (`dataset_manifest.json`).
+  - Formatted and executed scientific dataset audit script (`scripts/audit_dataset.py`).
+  - Added 19 new automated tests (38 total passed tests).
+- [ ] **Milestone M2: Scientific Rule Engine**
+  - Implement ASTM barrier compliance filtering algorithms.
+  - Model commodity-specific tolerance rules (chilling injury, anaerobic thresholds).
+  - Multi-attribute safety checks and rule-based candidate pruning.
+- [ ] **Milestone M3: Machine Learning Model Training & Validation**
+  - Ingest expanded multi-temperature kinetics datasets ($\ge 100$ observations).
+  - Fit XGBoost shelf-life regressors with 5-fold cross-validation.
+  - Monotonicity constraint enforcement and model registry serialization.
+- [ ] **Milestone M4: Full Pipeline Integration & User Trials**
   - End-to-end integration connecting Rule Filter, ML Predictor, and TOPSIS MCDM.
   - User feedback loop persistence and expert packaging validation.

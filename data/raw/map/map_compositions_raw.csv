@@ -1,0 +1,11 @@
+source_id,composition_name,food_category,o2_pct_raw,co2_pct_raw,n2_pct_raw,recommended_temp_min_c,recommended_temp_max_c,packaging_context,table_or_section_ref
+SRC-MAP-001,High CO2 Fresh Berry MAP,FRUIT,4.0,12.0,84.0,0.0,4.0,Optimal for strawberries and raspberries to suppress Botrytis cinerea without inducing anaerobic off-flavors.,Table 1
+SRC-MAP-001,Apple Controlled Cold Storage Atmosphere,FRUIT,2.0,1.5,96.5,0.0,3.0,Standard ultra-low oxygen storage atmosphere for pome fruits preventing internal breakdown and scald.,Table 1
+SRC-MAP-002,Brassica and Floret MAP,VEGETABLE,2.5,7.5,90.0,0.0,4.0,Broccoli and cauliflower floret headspace suppressing yellowing and chlorophyll degradation while avoiding anaerobic sulfur aromas.,Table 2
+SRC-MAP-002,Leafy Greens and Fresh Cut Salad MAP,VEGETABLE,2.0,6.0,92.0,1.0,4.0,Cut romaine and spinach; retains crispness and inhibits enzymatic browning of cut edges with mandatory minimum 1-2% O2 for pathogen safety.,Table 2
+SRC-MAP-002,Tomato Ripe Preservation Atmosphere,VEGETABLE,4.0,4.0,92.0,10.0,13.0,Non-chilling temperature regime for ripe and mature-green tomatoes maintaining lycopene synthesis while slowing softening.,Table 2
+SRC-MAP-002,Whole Fresh Mushroom MAP,VEGETABLE,3.0,8.0,89.0,0.0,4.0,Slows cap opening (veiling rupture) and enzymatic polyphenol oxidase stipe browning in button mushrooms.,Table 2
+SRC-MAP-004,High Oxygen Fresh Red Meat MAP,MEAT,75.0,20.0,5.0,0.0,2.0,High O2 preserves bright red oxymyoglobin pigment; 20% CO2 inhibits aerobic pseudomonad spoilage flora.,Table 2
+SRC-MAP-004,Hard and Semi-Hard Cheese MAP,DAIRY,0.0,30.0,70.0,2.0,6.0,Eliminates mold growth (Penicillium spp.) without causing package collapse via CO2 absorption into dairy fat.,Table 2
+SRC-MAP-004,Bakery Strict Anaerobic MAP,BAKERY,0.0,70.0,30.0,15.0,25.0,High CO2 prevents fungal staling and mold germination on high-moisture sliced sandwich breads for extended ambient shelf life.,Table 2
+SRC-MAP-004,Dry Grain & Nut Hermetic Nitrogen Flush,GRAIN,0.5,0.0,99.5,15.0,25.0,Ultra-low oxygen nitrogen purge eliminating insect infestation (weevils) and lipid oxidation in dry cereals and tree nuts.,Table 2

@@ -1,0 +1,17 @@
+source_id,commodity_name,category,moisture_content_raw,moisture_unit_raw,water_activity_raw,fat_content_raw,fat_unit_raw,protein_content_raw,protein_unit_raw,pH_raw,ethylene_production_level,moisture_sensitive,oxygen_sensitive,ethylene_sensitive,light_sensitive,fdc_id_or_ref
+SRC-FOOD-003,Strawberry,FRUIT,90.95,g/100g,0.985,0.30,g/100g,0.67,g/100g,3.5,VERY_LOW,True,True,False,False,FDC-167762
+SRC-FOOD-003,Apple,FRUIT,85.56,g/100g,0.970,0.17,g/100g,0.26,g/100g,3.6,VERY_HIGH,False,True,True,False,FDC-171688
+SRC-FOOD-003,Broccoli,VEGETABLE,89.30,g/100g,0.990,0.37,g/100g,2.82,g/100g,6.5,VERY_LOW,True,True,True,False,FDC-170379
+SRC-FOOD-003,Tomato (Mature Green),VEGETABLE,94.52,g/100g,0.988,0.20,g/100g,0.88,g/100g,4.4,MODERATE,True,False,True,False,FDC-170457
+SRC-FOOD-003,Tomato (Ripe),VEGETABLE,94.52,g/100g,0.990,0.20,g/100g,0.88,g/100g,4.4,HIGH,True,False,True,False,FDC-170457
+SRC-FOOD-003,Spinach,VEGETABLE,91.40,g/100g,0.990,0.39,g/100g,2.86,g/100g,6.4,VERY_LOW,True,True,True,False,FDC-168462
+SRC-FOOD-003,Banana,FRUIT,74.91,g/100g,0.975,0.33,g/100g,1.09,g/100g,4.8,VERY_HIGH,False,False,True,False,FDC-173944
+SRC-FOOD-003,Button Mushroom,VEGETABLE,92.45,g/100g,0.990,0.34,g/100g,3.09,g/100g,6.2,VERY_LOW,True,True,False,True,FDC-169251
+SRC-FOOD-003,Bell Pepper,VEGETABLE,92.18,g/100g,0.985,0.17,g/100g,0.99,g/100g,5.1,VERY_LOW,True,False,True,False,FDC-170108
+SRC-FOOD-003,Lettuce (Romaine),VEGETABLE,94.61,g/100g,0.990,0.30,g/100g,1.23,g/100g,5.9,VERY_LOW,True,True,True,False,FDC-169248
+SRC-FOOD-003,Table Grapes,FRUIT,80.54,g/100g,0.965,0.16,g/100g,0.72,g/100g,3.8,VERY_LOW,True,False,False,False,FDC-174682
+SRC-FOOD-003,Cheddar Cheese,DAIRY,36.75,g/100g,0.850,33.14,g/100g,24.90,g/100g,5.3,NONE,True,True,False,True,FDC-173418
+SRC-FOOD-003,Fresh Raw Beef (Steak),MEAT,71.20,g/100g,0.990,4.20,g/100g,23.50,g/100g,5.6,NONE,True,True,False,True,FDC-174032
+SRC-FOOD-003,Sliced White Bread,BAKERY,36.40,g/100g,0.950,3.20,g/100g,8.85,g/100g,5.2,NONE,True,True,False,False,FDC-172685
+SRC-FOOD-003,Wheat Grain (Hard Red),GRAIN,12.00,g/100g,0.650,1.54,g/100g,12.61,g/100g,6.0,NONE,True,False,False,False,FDC-169720
+SRC-FOOD-003,Roasted Almonds,SNACK,3.15,g/100g,0.300,52.54,g/100g,21.15,g/100g,6.1,NONE,True,True,False,True,FDC-170567

@@ -1,0 +1,33 @@
+source_id,commodity_name,scientific_name,category,respiration_temp_raw,respiration_temp_unit_raw,respiration_rate_raw,respiration_unit_raw,respiration_basis,optimal_temp_min_raw,optimal_temp_max_raw,optimal_temp_unit_raw,optimal_rh_min_raw,optimal_rh_max_raw,storage_life_raw,storage_life_unit_raw,table_number,page_number
+SRC-FOOD-001,Strawberry,Fragaria x ananassa,FRUIT,0,C,12.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,90,95,7,days,Table 2,p. 26
+SRC-FOOD-001,Strawberry,Fragaria x ananassa,FRUIT,5,C,22.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,90,95,7,days,Table 2,p. 26
+SRC-FOOD-001,Strawberry,Fragaria x ananassa,FRUIT,10,C,48.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,90,95,7,days,Table 2,p. 26
+SRC-FOOD-001,Strawberry,Fragaria x ananassa,FRUIT,20,C,100.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,90,95,7,days,Table 2,p. 26
+SRC-FOOD-001,Apple,Malus domestica,FRUIT,0,C,3.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,4,C,90,95,120,days,Table 2,p. 26
+SRC-FOOD-001,Apple,Malus domestica,FRUIT,5,C,6.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,4,C,90,95,120,days,Table 2,p. 26
+SRC-FOOD-001,Apple,Malus domestica,FRUIT,10,C,12.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,4,C,90,95,120,days,Table 2,p. 26
+SRC-FOOD-001,Apple,Malus domestica,FRUIT,20,C,30.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,4,C,90,95,120,days,Table 2,p. 26
+SRC-FOOD-001,Broccoli,Brassica oleracea var. italica,VEGETABLE,0,C,21.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,14,days,Table 2,p. 26
+SRC-FOOD-001,Broccoli,Brassica oleracea var. italica,VEGETABLE,5,C,34.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,14,days,Table 2,p. 26
+SRC-FOOD-001,Broccoli,Brassica oleracea var. italica,VEGETABLE,10,C,81.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,14,days,Table 2,p. 26
+SRC-FOOD-001,Broccoli,Brassica oleracea var. italica,VEGETABLE,20,C,280.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,14,days,Table 2,p. 26
+SRC-FOOD-001,Tomato (Mature Green),Solanum lycopersicum,VEGETABLE,12.5,C,16.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,12.5,15,C,90,95,21,days,Table 2,p. 27
+SRC-FOOD-001,Tomato (Ripe),Solanum lycopersicum,VEGETABLE,10,C,16.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,10,12.5,C,90,95,10,days,Table 2,p. 27
+SRC-FOOD-001,Tomato (Ripe),Solanum lycopersicum,VEGETABLE,20,C,33.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,10,12.5,C,90,95,10,days,Table 2,p. 27
+SRC-FOOD-001,Spinach,Spinacia oleracea,VEGETABLE,0,C,22.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,10,days,Table 2,p. 27
+SRC-FOOD-001,Spinach,Spinacia oleracea,VEGETABLE,5,C,46.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,10,days,Table 2,p. 27
+SRC-FOOD-001,Spinach,Spinacia oleracea,VEGETABLE,10,C,88.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,10,days,Table 2,p. 27
+SRC-FOOD-001,Spinach,Spinacia oleracea,VEGETABLE,20,C,270.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,10,days,Table 2,p. 27
+SRC-FOOD-001,Banana,Musa acuminata,FRUIT,13,C,25.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,13,15,C,90,95,14,days,Table 2,p. 26
+SRC-FOOD-001,Banana,Musa acuminata,FRUIT,20,C,60.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,13,15,C,90,95,14,days,Table 2,p. 26
+SRC-FOOD-001,Button Mushroom,Agaricus bisporus,VEGETABLE,0,C,28.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,95,7,days,Table 2,p. 27
+SRC-FOOD-001,Button Mushroom,Agaricus bisporus,VEGETABLE,5,C,55.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,95,7,days,Table 2,p. 27
+SRC-FOOD-001,Button Mushroom,Agaricus bisporus,VEGETABLE,10,C,90.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,95,7,days,Table 2,p. 27
+SRC-FOOD-001,Bell Pepper,Capsicum annuum,VEGETABLE,7.5,C,15.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,7.5,10,C,90,95,18,days,Table 2,p. 27
+SRC-FOOD-001,Bell Pepper,Capsicum annuum,VEGETABLE,10,C,20.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,7.5,10,C,90,95,18,days,Table 2,p. 27
+SRC-FOOD-001,Bell Pepper,Capsicum annuum,VEGETABLE,20,C,45.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,7.5,10,C,90,95,18,days,Table 2,p. 27
+SRC-FOOD-001,Lettuce (Romaine),Lactuca sativa,VEGETABLE,0,C,14.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,18,days,Table 2,p. 27
+SRC-FOOD-001,Lettuce (Romaine),Lactuca sativa,VEGETABLE,5,C,22.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,18,days,Table 2,p. 27
+SRC-FOOD-001,Lettuce (Romaine),Lactuca sativa,VEGETABLE,10,C,44.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,0,1,C,95,100,18,days,Table 2,p. 27
+SRC-FOOD-001,Table Grapes,Vitis vinifera,FRUIT,0,C,3.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,0,C,90,95,60,days,Table 2,p. 26
+SRC-FOOD-001,Table Grapes,Vitis vinifera,FRUIT,5,C,6.0,mg CO2/(kg*hr),gross_respiration_rate_at_temperature,-1,0,C,90,95,60,days,Table 2,p. 26

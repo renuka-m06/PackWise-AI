@@ -1,0 +1,33 @@
+{
+  "dataset_name": "PackWise AI Empirical Packaging & Respiration Foundation",
+  "dataset_version": "1.0.0-M1",
+  "created_at": "2026-09-26T18:19:13.665286+00:00",
+  "record_counts": {
+    "commodity_observations": 37,
+    "packaging_materials": 15,
+    "map_compositions": 10,
+    "total_records": 62
+  },
+  "source_counts": {
+    "food_sources": 4,
+    "packaging_sources": 7,
+    "map_sources": 4,
+    "total_unique_sources": 15
+  },
+  "processing_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "validation_status": "PASSED_STRICT_PHYSICAL_BOUNDS",
+  "checksums_sha256": {
+    "data/raw/food/usda_handbook_66_respiration_raw.csv": "e9942ad28878b285bc6a5c1480b896a7197b5a79a70c7479781e3ebbb684992f",
+    "data/raw/food/food_proximate_properties_raw.csv": "c1b9218c3e466119a3d4ab501a8a48f1e1bd2c4715ff4b9cf77534c266e7b03f",
+    "data/raw/packaging/barrier_materials_raw.csv": "ad9b91945402a3c3210661e64f85cc787ae44cbb51d8194471dfce2e0f93af3c",
+    "data/raw/map/map_compositions_raw.csv": "dfcb710e94dba9f29824f0452f94a477b21e138d394f4a6f59705b021ad42ca2",
+    "data/processed/commodities.csv": "28c08c9390d6004d5b5a6b5d454af8cdc547c64c943e578777d3785445233c21",
+    "data/processed/materials.csv": "9a8b7018d08dd1a118bbfbd7f4735880117d18b0bf7356f2450ea470a659e27d",
+    "data/processed/map_compositions.csv": "0b6c9757f19237a99d041318175f4476aec96d78aa5674987380989e397a0530",
+    "data/provenance/food_sources.json": "c7506e117095139d90cb69e78e134ab4d83035f1aa0a6c45fd1a7f47a87b810f",
+    "data/provenance/packaging_sources.json": "ec23b193a7de32f878d9b192d064f733189f9db509ae08e6ca956aaea0155afd",
+    "data/provenance/map_sources.json": "c86efa226d75cfcef4604cecff9f51ef4e9bec9b6e70e1e50a08176af184a801"
+  },
+  "anti_fabrication_declaration": "All records in this dataset are extracted from traceable primary literature (USDA Handbook 66, UC Davis Postharvest Center, USDA FoodData Central, Robertson 2012, Massey 2003, NatureWorks TDS, Futamura NatureFlex TDS, Gorris & Peppelenbos 1992, Sandhya 2010). Zero synthetic, random, interpolated, or unverified values have been created."
+}

@@ -1,0 +1,38 @@
+commodity_name,scientific_name,category,observation_temperature_c,respiration_rate_original_value,respiration_rate_original_unit,respiration_rate_mg_co2_kg_hr,respiration_conversion_method,optimal_temperature_min_c,optimal_temperature_max_c,optimal_rh_min_percent,optimal_rh_max_percent,target_shelf_life_unpacked_days,water_activity_aw,moisture_content_pct,pH,moisture_sensitive,oxygen_sensitive,ethylene_sensitive,light_sensitive,source_id,source_reference
+Strawberry,Fragaria x ananassa,FRUIT,0.0,12.0,mg CO2/(kg*hr),12.0,identity,0.0,1.0,90.0,95.0,7,0.985,90.95,3.5,True,True,False,False,SRC-FOOD-001,Table 2 p. 26
+Strawberry,Fragaria x ananassa,FRUIT,5.0,22.0,mg CO2/(kg*hr),22.0,identity,0.0,1.0,90.0,95.0,7,0.985,90.95,3.5,True,True,False,False,SRC-FOOD-001,Table 2 p. 26
+Strawberry,Fragaria x ananassa,FRUIT,10.0,48.0,mg CO2/(kg*hr),48.0,identity,0.0,1.0,90.0,95.0,7,0.985,90.95,3.5,True,True,False,False,SRC-FOOD-001,Table 2 p. 26
+Strawberry,Fragaria x ananassa,FRUIT,20.0,100.0,mg CO2/(kg*hr),100.0,identity,0.0,1.0,90.0,95.0,7,0.985,90.95,3.5,True,True,False,False,SRC-FOOD-001,Table 2 p. 26
+Apple,Malus domestica,FRUIT,0.0,3.0,mg CO2/(kg*hr),3.0,identity,-1.0,4.0,90.0,95.0,120,0.97,85.56,3.6,False,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Apple,Malus domestica,FRUIT,5.0,6.0,mg CO2/(kg*hr),6.0,identity,-1.0,4.0,90.0,95.0,120,0.97,85.56,3.6,False,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Apple,Malus domestica,FRUIT,10.0,12.0,mg CO2/(kg*hr),12.0,identity,-1.0,4.0,90.0,95.0,120,0.97,85.56,3.6,False,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Apple,Malus domestica,FRUIT,20.0,30.0,mg CO2/(kg*hr),30.0,identity,-1.0,4.0,90.0,95.0,120,0.97,85.56,3.6,False,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Broccoli,Brassica oleracea var. italica,VEGETABLE,0.0,21.0,mg CO2/(kg*hr),21.0,identity,0.0,1.0,95.0,100.0,14,0.99,89.3,6.5,True,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Broccoli,Brassica oleracea var. italica,VEGETABLE,5.0,34.0,mg CO2/(kg*hr),34.0,identity,0.0,1.0,95.0,100.0,14,0.99,89.3,6.5,True,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Broccoli,Brassica oleracea var. italica,VEGETABLE,10.0,81.0,mg CO2/(kg*hr),81.0,identity,0.0,1.0,95.0,100.0,14,0.99,89.3,6.5,True,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Broccoli,Brassica oleracea var. italica,VEGETABLE,20.0,280.0,mg CO2/(kg*hr),280.0,identity,0.0,1.0,95.0,100.0,14,0.99,89.3,6.5,True,True,True,False,SRC-FOOD-001,Table 2 p. 26
+Tomato (Mature Green),Solanum lycopersicum,VEGETABLE,12.5,16.0,mg CO2/(kg*hr),16.0,identity,12.5,15.0,90.0,95.0,21,0.988,94.52,4.4,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Tomato (Ripe),Solanum lycopersicum,VEGETABLE,10.0,16.0,mg CO2/(kg*hr),16.0,identity,10.0,12.5,90.0,95.0,10,0.99,94.52,4.4,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Tomato (Ripe),Solanum lycopersicum,VEGETABLE,20.0,33.0,mg CO2/(kg*hr),33.0,identity,10.0,12.5,90.0,95.0,10,0.99,94.52,4.4,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Spinach,Spinacia oleracea,VEGETABLE,0.0,22.0,mg CO2/(kg*hr),22.0,identity,0.0,1.0,95.0,100.0,10,0.99,91.4,6.4,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Spinach,Spinacia oleracea,VEGETABLE,5.0,46.0,mg CO2/(kg*hr),46.0,identity,0.0,1.0,95.0,100.0,10,0.99,91.4,6.4,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Spinach,Spinacia oleracea,VEGETABLE,10.0,88.0,mg CO2/(kg*hr),88.0,identity,0.0,1.0,95.0,100.0,10,0.99,91.4,6.4,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Spinach,Spinacia oleracea,VEGETABLE,20.0,270.0,mg CO2/(kg*hr),270.0,identity,0.0,1.0,95.0,100.0,10,0.99,91.4,6.4,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Banana,Musa acuminata,FRUIT,13.0,25.0,mg CO2/(kg*hr),25.0,identity,13.0,15.0,90.0,95.0,14,0.975,74.91,4.8,False,False,True,False,SRC-FOOD-001,Table 2 p. 26
+Banana,Musa acuminata,FRUIT,20.0,60.0,mg CO2/(kg*hr),60.0,identity,13.0,15.0,90.0,95.0,14,0.975,74.91,4.8,False,False,True,False,SRC-FOOD-001,Table 2 p. 26
+Button Mushroom,Agaricus bisporus,VEGETABLE,0.0,28.0,mg CO2/(kg*hr),28.0,identity,0.0,1.0,95.0,95.0,7,0.99,92.45,6.2,True,True,False,True,SRC-FOOD-001,Table 2 p. 27
+Button Mushroom,Agaricus bisporus,VEGETABLE,5.0,55.0,mg CO2/(kg*hr),55.0,identity,0.0,1.0,95.0,95.0,7,0.99,92.45,6.2,True,True,False,True,SRC-FOOD-001,Table 2 p. 27
+Button Mushroom,Agaricus bisporus,VEGETABLE,10.0,90.0,mg CO2/(kg*hr),90.0,identity,0.0,1.0,95.0,95.0,7,0.99,92.45,6.2,True,True,False,True,SRC-FOOD-001,Table 2 p. 27
+Bell Pepper,Capsicum annuum,VEGETABLE,7.5,15.0,mg CO2/(kg*hr),15.0,identity,7.5,10.0,90.0,95.0,18,0.985,92.18,5.1,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Bell Pepper,Capsicum annuum,VEGETABLE,10.0,20.0,mg CO2/(kg*hr),20.0,identity,7.5,10.0,90.0,95.0,18,0.985,92.18,5.1,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Bell Pepper,Capsicum annuum,VEGETABLE,20.0,45.0,mg CO2/(kg*hr),45.0,identity,7.5,10.0,90.0,95.0,18,0.985,92.18,5.1,True,False,True,False,SRC-FOOD-001,Table 2 p. 27
+Lettuce (Romaine),Lactuca sativa,VEGETABLE,0.0,14.0,mg CO2/(kg*hr),14.0,identity,0.0,1.0,95.0,100.0,18,0.99,94.61,5.9,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Lettuce (Romaine),Lactuca sativa,VEGETABLE,5.0,22.0,mg CO2/(kg*hr),22.0,identity,0.0,1.0,95.0,100.0,18,0.99,94.61,5.9,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Lettuce (Romaine),Lactuca sativa,VEGETABLE,10.0,44.0,mg CO2/(kg*hr),44.0,identity,0.0,1.0,95.0,100.0,18,0.99,94.61,5.9,True,True,True,False,SRC-FOOD-001,Table 2 p. 27
+Table Grapes,Vitis vinifera,FRUIT,0.0,3.0,mg CO2/(kg*hr),3.0,identity,-1.0,0.0,90.0,95.0,60,0.965,80.54,3.8,True,False,False,False,SRC-FOOD-001,Table 2 p. 26
+Table Grapes,Vitis vinifera,FRUIT,5.0,6.0,mg CO2/(kg*hr),6.0,identity,-1.0,0.0,90.0,95.0,60,0.965,80.54,3.8,True,False,False,False,SRC-FOOD-001,Table 2 p. 26
+Cheddar Cheese,,DAIRY,,,,,not_applicable,2.0,5.0,65.0,85.0,7,0.85,36.75,5.3,True,True,False,True,SRC-FOOD-003,FDC-173418
+Fresh Raw Beef (Steak),,MEAT,,,,,not_applicable,2.0,5.0,65.0,85.0,7,0.99,71.2,5.6,True,True,False,True,SRC-FOOD-003,FDC-174032
+Sliced White Bread,,BAKERY,,,,,not_applicable,15.0,25.0,65.0,85.0,60,0.95,36.4,5.2,True,True,False,False,SRC-FOOD-003,FDC-172685
+Wheat Grain (Hard Red),,GRAIN,,,,,not_applicable,15.0,25.0,65.0,85.0,60,0.65,12.0,6.0,True,False,False,False,SRC-FOOD-003,FDC-169720
+Roasted Almonds,,SNACK,,,,,not_applicable,15.0,25.0,65.0,85.0,60,0.3,3.15,6.1,True,True,False,True,SRC-FOOD-003,FDC-170567
