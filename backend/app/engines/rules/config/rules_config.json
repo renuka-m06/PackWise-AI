@@ -1,0 +1,161 @@
+{
+  "version": "m2.0.0",
+  "last_updated": "2026-09-27",
+  "engine_name": "PackWise AI Scientific Rule Engine",
+  "rules": {
+    "RULE-VAL-001": {
+      "rule_id": "RULE-VAL-001",
+      "rule_name": "DataIntegrityRule",
+      "category": "DATA_VALIDITY",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "DERIVED_ENGINEERING_RULE",
+      "scientific_basis": "Material records must have physically possible non-zero thickness (> 0 um) and valid polymer identification.",
+      "parameters": {
+        "min_thickness_micron": 1.0,
+        "max_thickness_micron": 2000.0
+      },
+      "scope": "All candidate packaging materials"
+    },
+    "RULE-SAF-001": {
+      "rule_id": "RULE-SAF-001",
+      "rule_name": "FoodContactCertificationRule",
+      "category": "SAFETY",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-PKG-001",
+      "scientific_basis": "Statutory food contact migration safety standard (Robertson 2012, Ch. 19; FDA 21 CFR 177 / FSSAI). Materials directly or indirectly contacting food must be food-contact certified.",
+      "parameters": {
+        "require_certified": true
+      },
+      "scope": "All food packaging candidates"
+    },
+    "RULE-SAF-002": {
+      "rule_id": "RULE-SAF-002",
+      "rule_name": "MAPPathogenSafetyRule",
+      "category": "SAFETY",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-MAP-003",
+      "scientific_basis": "Microbiological safety of MAP (Farber et al. 2003, Comprehensive Reviews in Food Science and Food Safety). Non-acid produce (pH > 4.6) stored above 3.0°C requires minimum 1.0-2.0% O2 or sufficient film permeability to prevent Clostridium botulinum toxin synthesis under anaerobic hermetic conditions.",
+      "parameters": {
+        "critical_ph_threshold": 4.6,
+        "critical_temperature_c": 3.0,
+        "minimum_headspace_o2_pct": 1.0,
+        "minimum_film_otr_for_nonacid_respiring": 50.0
+      },
+      "scope": "Fresh produce, low-acid foods, MAP packaging"
+    },
+    "RULE-SAF-003": {
+      "rule_id": "RULE-SAF-003",
+      "rule_name": "ChillingInjuryRule",
+      "category": "SAFETY",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-FOOD-002",
+      "scientific_basis": "Physiological postharvest chilling injury thresholds (Kader et al. 2020, UC Davis Postharvest Produce Fact Sheets). Tropical and subtropical produce undergoes irreversible pitting, mealiness, and rot when exposed to temperatures below their commodity-specific threshold.",
+      "parameters": {
+        "chilling_thresholds": {
+          "Banana": 13.0,
+          "Tomato": 10.0,
+          "Cucumber": 7.0,
+          "Mango": 12.0
+        }
+      },
+      "scope": "Chilling-sensitive commodities"
+    },
+    "RULE-STR-001": {
+      "rule_id": "RULE-STR-001",
+      "rule_name": "StorageTemperatureCompatibilityRule",
+      "category": "STORAGE",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-PKG-002",
+      "scientific_basis": "Polymer mechanical service temperature limits and glass transition (Massey 2003, Permeability Properties of Plastics and Elastomers). Unplasticized biopolymers and rigid polyesters can suffer brittle failure below 0°C, whereas polyolefins retain ductility down to -40°C.",
+      "parameters": {
+        "frozen_temp_threshold_c": -10.0,
+        "incompatible_frozen_polymers": ["BOPLA", "PLA", "Cellophane"]
+      },
+      "scope": "Cold chain and frozen storage regimes"
+    },
+    "RULE-BAR-001": {
+      "rule_id": "RULE-BAR-001",
+      "rule_name": "OxygenBarrierRule",
+      "category": "BARRIER",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-PKG-001",
+      "scientific_basis": "Gas permeation through polymer films under ASTM D3985 at 23°C, 0% RH (Robertson 2012, Food Packaging Principles and Practice). Oxygen-sensitive foods (lipid oxidation, rancidity, oxidative browning) require OTR <= 100 cc/(m2*day*atm) standard, or <= 30 cc/(m2*day*atm) for high oxygen barrier requirement.",
+      "parameters": {
+        "standard_max_otr_cc_m2_day_atm": 100.0,
+        "high_barrier_max_otr_cc_m2_day_atm": 30.0,
+        "test_temperature_c": 23.0,
+        "test_rh_percent": 0.0,
+        "test_standard": "ASTM D3985"
+      },
+      "scope": "Oxygen-sensitive foods and high-barrier constraints"
+    },
+    "RULE-BAR-002": {
+      "rule_id": "RULE-BAR-002",
+      "rule_name": "ProduceBreathabilityRule",
+      "category": "BARRIER",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-FOOD-001",
+      "scientific_basis": "Respiration kinetics and anaerobic threshold limits in active produce (Gross et al. 2016, USDA Handbook 66, pp. 26-28). Highly respiring produce (respiration rate >= 20 mg CO2/(kg*hr)) sealed inside impermeable barrier films (OTR < 50 cc/(m2*day*atm)) suffocate rapidly, triggering anaerobic fermentation, ethanol accumulation, and severe off-flavors.",
+      "parameters": {
+        "high_respiration_threshold_mg_co2_kg_hr": 20.0,
+        "minimum_breathable_otr_cc_m2_day_atm": 200.0,
+        "impermeable_ceiling_otr_cc_m2_day_atm": 50.0
+      },
+      "scope": "Respiring fresh fruits and vegetables"
+    },
+    "RULE-BAR-003": {
+      "rule_id": "RULE-BAR-003",
+      "rule_name": "MoistureBarrierRule",
+      "category": "BARRIER",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-PKG-001",
+      "scientific_basis": "Water vapor permeation under ASTM F1249 at 37.8°C, 90% RH (Robertson 2012, Food Packaging Principles and Practice; Rockland & Beuchat 1987). Moisture-sensitive foods (crisp bakery aw <= 0.65, powders) or high ambient RH (> 80%) require WVTR <= 25.0 g/(m2*day) standard, or <= 10.0 g/(m2*day) for strict dry preservation.",
+      "parameters": {
+        "standard_max_wvtr_g_m2_day": 25.0,
+        "strict_dry_max_wvtr_g_m2_day": 10.0,
+        "high_ambient_rh_threshold": 80.0,
+        "dry_food_critical_aw": 0.65,
+        "test_temperature_c": 37.8,
+        "test_rh_percent": 90.0,
+        "test_standard": "ASTM F1249"
+      },
+      "scope": "Moisture-sensitive foods and high humidity storage"
+    },
+    "RULE-MAT-001": {
+      "rule_id": "RULE-MAT-001",
+      "rule_name": "BiodegradabilityConstraintRule",
+      "category": "MATERIAL",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-PKG-003",
+      "scientific_basis": "Industrial and home compostability standards (ASTM D6400 / EN 13432 / NatureWorks 2021). When user explicitly requires biodegradable/compostable packaging, non-biodegradable synthetic polymers are excluded.",
+      "parameters": {
+        "recognized_standards": ["ASTM D6400", "EN 13432", "ISO 17088"]
+      },
+      "scope": "Requests with explicit biodegradable constraint"
+    },
+    "RULE-MAP-001": {
+      "rule_id": "RULE-MAP-001",
+      "rule_name": "MAPCompatibilityRule",
+      "category": "MAP",
+      "severity": "HARD",
+      "enabled": true,
+      "source_id": "SRC-MAP-001",
+      "scientific_basis": "Equilibrium modified atmosphere formulation validity (Gorris & Peppelenbos 1992, Sandhya 2010, Church & Parsons 1995). Verified gas mixture must sum to 100% (+-1.5%) and match food category and temperature envelope.",
+      "parameters": {
+        "gas_sum_tolerance_pct": 1.5,
+        "high_co2_threshold_pct": 15.0,
+        "max_otr_for_high_co2_map": 150.0
+      },
+      "scope": "Modified atmosphere packaging configurations"
+    }
+  }
+}

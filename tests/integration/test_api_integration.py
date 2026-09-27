@@ -17,8 +17,8 @@ def test_api_v1_health_flow():
 
 def test_api_v1_recommendation_flow():
     """
-    Integration test verifying that /api/v1/recommendations accepts standard
-    commodity payload and returns status PENDING_ENGINES with zero fake recommendations.
+    Integration test verifying that /api/v1/recommendations executes the M2
+    pipeline for a verified commodity (Broccoli) and returns TOPSIS-ranked candidates.
     """
     payload = {
         "commodity_name": "Broccoli",
@@ -40,6 +40,31 @@ def test_api_v1_recommendation_flow():
             "barrier_performance_weight": 0.2,
             "sustainability_weight": 0.2,
             "cost_efficiency_weight": 0.2
+        }
+    }
+
+    response = client.post("/api/v1/recommendations", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "COMPLETED"
+    assert data["recommended_material"] is not None
+    assert data["recommended_material"]["food_contact_certified"] is True
+    assert len(data["candidate_rankings"]) > 0
+    assert data["candidate_rankings"][0]["rank"] == 1
+    assert "M2" in data["message"]
+
+
+def test_api_v1_unverified_commodity_flow():
+    """
+    Integration test verifying that an unverified commodity triggers disarmed status
+    (PENDING_ENGINES) with zero fake recommendations in accordance with anti-fabrication standard.
+    """
+    payload = {
+        "commodity_name": "Unknown Synthetic Food Item",
+        "storage_conditions": {
+            "storage_temperature_c": 4.0,
+            "ambient_rh_percent": 80.0,
+            "target_shelf_life_days": 10
         }
     }
 

@@ -320,7 +320,7 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Rule-based filtering engine and TOPSIS mathematical decision engine.
   - Professional React + TypeScript + Tailwind CSS UI with live telemetry.
   - Docker Compose configuration, unit tests, and CI verification scripts.
-- [x] **Milestone M1: Empirical Data Foundation, Scientific Validation & Provenance** *(Current)*
+- [x] **Milestone M1: Empirical Data Foundation, Scientific Validation & Provenance**
   - Curated 37 produce respiration kinetics from USDA Handbook No. 66 & UC Davis Postharvest.
   - Ingested 15 verified packaging barrier materials (OTR/WVTR) from Robertson (2012), Massey (2003), and manufacturer TDS.
   - Ingested 10 verified MAP equilibrium gas mixtures from Gorris & Peppelenbos (1992) and Sandhya (2010).
@@ -330,10 +330,16 @@ The PackWise AI data pipeline operates in six deterministic stages:
   - Generated machine-readable dataset manifest with SHA-256 checksums (`dataset_manifest.json`).
   - Formatted and executed scientific dataset audit script (`scripts/audit_dataset.py`).
   - Added 19 new automated tests (38 total passed tests).
-- [ ] **Milestone M2: Scientific Rule Engine**
-  - Implement ASTM barrier compliance filtering algorithms.
-  - Model commodity-specific tolerance rules (chilling injury, anaerobic thresholds).
-  - Multi-attribute safety checks and rule-based candidate pruning.
+- [x] **Milestone M2: Scientific Rule Engine, Constraint Filtering & Evidence-Based Packaging Requirements** *(Current)*
+  - Implemented deterministic scientific rule engine (`m2.0.0`) with priority evaluation.
+  - Built food requirement extraction engine (`FoodRequirementExtractor`) with zero-extrapolation respiration rules.
+  - Implemented ASTM D3985 oxygen barrier and ASTM F1249 moisture barrier screening rules.
+  - Enforced statutory food contact certification and Farber et al. (2003) *C. botulinum* MAP pathogen safety margins.
+  - Implemented postharvest chilling injury thresholds (Kader et al. 2020) and polymer glass transition rules.
+  - Created structured explanation generator and evidence graph builder (`ExplanationGenerator`).
+  - Separated hard elimination constraints from soft circularity/cost preference criteria.
+  - Integrated rule screening pipeline directly with `TOPSISDecisionEngine` and FastAPI recommendations endpoint.
+  - Expanded test suite with 27 comprehensive M2 tests (65 total automated tests passing).
 - [ ] **Milestone M3: Machine Learning Model Training & Validation**
   - Ingest expanded multi-temperature kinetics datasets ($\ge 100$ observations).
   - Fit XGBoost shelf-life regressors with 5-fold cross-validation.
