@@ -49,13 +49,21 @@ class RecommendationService:
         # 2. Database persistence if active connection exists
         if self.db is not None:
             try:
+                summary_data = {
+                    "request_id": response.request_id,
+                    "status": response.rule_engine_status,
+                    "eligible_count": len(response.alternative_materials) + (1 if response.primary_recommendation else 0),
+                    "primary_name": response.primary_recommendation.name if response.primary_recommendation else None,
+                    "primary_code": response.primary_recommendation.code if response.primary_recommendation else None,
+                    "primary_polymer": response.primary_recommendation.polymer_type if response.primary_recommendation else None,
+                    "recommendation_status": response.recommendation_status,
+                    "rule_engine_status": response.rule_engine_status,
+                    "ml_status": response.ml_status,
+                }
                 rec_model = RecommendationRecord(
                     commodity_name_input=request.commodity_name,
                     request_payload=request.model_dump(mode="json"),
-                    rule_filtering_summary={
-                        "status": response.rule_engine_status,
-                        "eligible_count": len(response.alternative_materials) + (1 if response.primary_recommendation else 0)
-                    },
+                    rule_filtering_summary=summary_data,
                     topsis_scores={
                         "scores": [
                             {"material_id": c.material_id, "score": c.topsis_score, "rank": c.rank}
@@ -75,23 +83,61 @@ class RecommendationService:
     def get_history(self, skip: int = 0, limit: int = 50) -> List[RecommendationHistoryItem]:
         """
         Retrieves historical recommendation audit summaries, ordered newest first.
+        Queries PostgreSQL if connected; falls back to in-memory audit store if offline.
         """
+        if self.db is not None:
+            try:
+                stmt = select(RecommendationRecord).order_by(desc(RecommendationRecord.created_at)).offset(skip).limit(limit)
+                db_records = list(self.db.scalars(stmt).all())
+                if db_records:
+                    db_items: List[RecommendationHistoryItem] = []
+                    for rec in db_records:
+                        payload = rec.request_payload or {}
+                        storage = payload.get("storage_conditions", {})
+                        summary = rec.rule_filtering_summary or {}
+                        scores_dict = rec.topsis_scores or {}
+                        scores_list = scores_dict.get("scores", [])
+                        top_score = scores_list[0].get("score") if scores_list else None
+                        
+                        req_id = summary.get("request_id") or str(rec.id)
+                        created_dt = rec.created_at
+                        if isinstance(created_dt, datetime) and created_dt.tzinfo is None:
+                            created_dt = created_dt.replace(tzinfo=timezone.utc)
+
+                        db_items.append(
+                            RecommendationHistoryItem(
+                                request_id=req_id,
+                                timestamp=created_dt if isinstance(created_dt, datetime) else datetime.now(timezone.utc),
+                                commodity_name=rec.commodity_name_input,
+                                storage_temperature_c=storage.get("storage_temperature_c", 4.0),
+                                ambient_rh_percent=storage.get("ambient_rh_percent", 85.0),
+                                target_shelf_life_days=storage.get("target_shelf_life_days", 7.0),
+                                primary_material_name=summary.get("primary_name"),
+                                primary_polymer_type=summary.get("primary_polymer"),
+                                topsis_score=top_score,
+                                recommendation_status=summary.get("recommendation_status", "AVAILABLE_WITHOUT_ML"),
+                                rule_engine_status=summary.get("rule_engine_status", "COMPLETED"),
+                                ml_status=summary.get("ml_status", "INSUFFICIENT_VERIFIED_DATA")
+                            )
+                        )
+                    return db_items
+            except Exception as e:
+                logger.warning(f"Could not load recommendation history from database: {e}")
+
+        # In-memory fallback
         history_items: List[RecommendationHistoryItem] = []
 
         with _AUDIT_LOCK:
-            # Reverse order of in-memory store (newest first)
             cached_responses = list(reversed(list(_AUDIT_STORE.values())))
 
         sliced = cached_responses[skip : skip + limit]
 
         for resp in sliced:
-            # Extract storage conditions safely
             storage_conditions = resp.audit_metadata.get("storage_conditions", {}) if resp.audit_metadata else {}
             temp_c = storage_conditions.get("storage_temperature_c", 4.0)
             rh_pct = storage_conditions.get("ambient_rh_percent", 85.0)
             days = storage_conditions.get("target_shelf_life_days", 7.0)
 
-            # Extract primary recommendation properties
             primary_name = resp.primary_recommendation.name if resp.primary_recommendation else None
             primary_polymer = resp.primary_recommendation.polymer_type if resp.primary_recommendation else None
             topsis_score = resp.candidate_rankings[0].topsis_score if resp.candidate_rankings else None
@@ -100,7 +146,6 @@ class RecommendationService:
             if resp.audit_metadata and "commodity_name" in resp.audit_metadata:
                 commodity_name = resp.audit_metadata["commodity_name"]
             elif resp.applied_rules and len(resp.applied_rules) > 0:
-                # Fallback to request rule explanation
                 explanation = resp.applied_rules[0].explanation
                 if "Commodity '" in explanation:
                     commodity_name = explanation.split("Commodity '")[1].split("'")[0]
