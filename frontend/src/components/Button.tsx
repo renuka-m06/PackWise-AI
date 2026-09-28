@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'danger';
+  variant?: 'primary' | 'secondary' | 'outline' | 'danger' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
 }
@@ -16,21 +16,22 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const variantStyles = {
-    primary: 'bg-brand-500 hover:bg-brand-400 text-slate-950 font-semibold shadow-neon hover:shadow-brand-500/40 focus:ring-brand-400',
-    secondary: 'bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium border border-slate-700 focus:ring-slate-400',
-    outline: 'border border-brand-500/50 hover:border-brand-400 text-brand-300 hover:bg-brand-950/40 focus:ring-brand-400',
-    danger: 'bg-rose-600 hover:bg-rose-500 text-white font-medium focus:ring-rose-400',
+    primary: 'bg-olive hover:bg-olive-600 text-white font-medium shadow-subtle border border-olive-700/20 focus:ring-olive-500',
+    secondary: 'bg-sand hover:bg-sand-400 text-charcoal font-medium border border-sand-400/30 focus:ring-sand-400',
+    outline: 'bg-paper hover:bg-offwhite text-charcoal font-medium border border-bordercolor focus:ring-olive-500',
+    danger: 'bg-terracotta hover:bg-terracotta-600 text-white font-medium border border-terracotta-700/20 focus:ring-terracotta',
+    ghost: 'hover:bg-offwhite text-charcoal-700 font-medium focus:ring-olive-500',
   };
 
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-xs rounded-md',
-    md: 'px-4 py-2 text-sm rounded-lg',
-    lg: 'px-6 py-3 text-base rounded-xl',
+    sm: 'px-2.5 py-1.5 text-xs rounded-md',
+    md: 'px-4 py-2 text-sm rounded-md',
+    lg: 'px-5 py-2.5 text-base rounded-md',
   };
 
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-offwhite disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
       disabled={disabled || isLoading}
       {...props}
     >

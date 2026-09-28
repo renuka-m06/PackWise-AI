@@ -1,20 +1,23 @@
 import React from 'react';
-import { ShieldCheck, Info } from 'lucide-react';
+import { ShieldCheck, Database } from 'lucide-react';
 
 export const StatusBanner: React.FC = () => {
   return (
-    <div className="bg-gradient-to-r from-slate-900 via-slate-900/90 to-brand-950/40 border-b border-brand-500/20 px-4 py-2 text-xs">
-      <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-slate-300">
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-500/20 text-brand-400">
-            <ShieldCheck className="w-3.5 h-3.5" />
+    <div className="bg-sand-50 border-b border-bordercolor/80 px-4 py-1.5 text-xs text-charcoal-700">
+      <div className="max-w-[1280px] mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <ShieldCheck className="w-3.5 h-3.5 text-olive" />
+          <span className="font-semibold text-olive">PackWise Intelligence:</span>
+          <span className="text-warmgray hidden sm:inline">
+            Deterministic rule screening & TOPSIS MCDM active. Empirical USDA & ASTM test standards enforced.
           </span>
-          <span className="font-semibold text-slate-200">Milestone M0 Active:</span>
-          <span>Foundation & Repository Architecture. Zero synthetic/invented data policy strictly enforced.</span>
+          <span className="text-warmgray sm:hidden">
+            Empirical ASTM standards enforced.
+          </span>
         </div>
-        <div className="flex items-center gap-2 text-slate-400">
-          <Info className="w-3.5 h-3.5 text-amber-400" />
-          <span className="text-amber-300/90 font-medium">Empirical dataset integration pending in Phase 1</span>
+        <div className="flex items-center gap-1.5 text-warmgray text-[11px] font-mono">
+          <Database className="w-3 h-3 text-natgreen" />
+          <span>16 Commodities • 15 Polymers</span>
         </div>
       </div>
     </div>

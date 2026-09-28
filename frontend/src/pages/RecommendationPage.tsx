@@ -482,7 +482,7 @@ export const RecommendationPage: React.FC = () => {
                     <div className="p-3 rounded bg-black/40 text-[11px] space-y-1">
                       <p className="font-semibold text-rose-300">Primary Rejection Factors:</p>
                       <ul className="list-disc pl-4 text-slate-300 space-y-0.5">
-                        {response.rejection_summary.primary_rejection_reasons.map((r, i) => (
+                        {(response.rejection_summary.primary_rejection_reasons || []).map((r, i) => (
                           <li key={i}>{r}</li>
                         ))}
                       </ul>

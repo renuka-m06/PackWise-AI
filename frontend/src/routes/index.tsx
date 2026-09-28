@@ -1,7 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
 import { DashboardPage } from '../pages/DashboardPage';
-import { RecommendationPage } from '../pages/RecommendationPage';
+import { NewAnalysisPage } from '../pages/NewAnalysisPage';
+import { RecommendationResultsPage } from '../pages/RecommendationResultsPage';
 import { CatalogPage } from '../pages/CatalogPage';
 import { ArchitecturePage } from '../pages/ArchitecturePage';
 import { HistoryPage } from '../pages/HistoryPage';
@@ -14,7 +15,10 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: 'recommend', element: <RecommendationPage /> },
+      { path: 'dashboard', element: <DashboardPage /> },
+      { path: 'analyze', element: <NewAnalysisPage /> },
+      { path: 'recommend', element: <NewAnalysisPage /> },
+      { path: 'recommendations', element: <RecommendationResultsPage /> },
       { path: 'materials', element: <CatalogPage /> },
       { path: 'catalog', element: <Navigate to="/materials" replace /> },
       { path: 'history', element: <HistoryPage /> },

@@ -1,56 +1,61 @@
 import React from 'react';
-import { Shield, Database, Cpu } from 'lucide-react';
+import { Package, Shield, Database, Scale } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-slate-800 bg-slate-950/80 py-8 text-slate-400 text-xs mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <footer className="border-t border-bordercolor bg-paper py-8 text-warmgray text-xs mt-auto">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-2 text-white font-bold mb-2">
-              <span className="text-brand-400 font-mono">PackWise AI</span>
+            <div className="flex items-center gap-2 text-charcoal font-bold mb-2">
+              <Package className="w-4 h-4 text-olive" />
+              <span className="text-olive font-sans">PackWise</span>
             </div>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              AI-Based Intelligent Food Packaging Material Recommendation System. Built for Smart India Hackathon (SIH).
+            <p className="text-warmgray text-xs leading-relaxed">
+              Smarter Packaging for Better Food. A data-driven system for recommending suitable food packaging materials based on product properties, storage conditions, and barrier standards.
             </p>
           </div>
 
           <div>
-            <h4 className="text-slate-200 font-semibold mb-2 flex items-center gap-1.5">
-              <Shield className="w-3.5 h-3.5 text-brand-400" /> Data Provenance Policy
+            <h4 className="text-charcoal font-semibold mb-2 flex items-center gap-1.5">
+              <Shield className="w-3.5 h-3.5 text-olive" /> Testing Standards
             </h4>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              Strict scientific standard: No synthetic or fabricated datasets. All material barrier properties will cite ASTM standard test methods (D3985, F1249) upon ingestion.
+            <p className="text-warmgray text-xs leading-relaxed">
+              OTR evaluated via ASTM D3985 (coulometric detector at 23°C). WVTR evaluated via ASTM F1249 (infrared sensor at 37.8°C, 90% RH). Food-contact certified under FDA 21 CFR / FSSAI.
             </p>
           </div>
 
           <div>
-            <h4 className="text-slate-200 font-semibold mb-2 flex items-center gap-1.5">
-              <Cpu className="w-3.5 h-3.5 text-brand-400" /> Multi-Criteria MCDM
+            <h4 className="text-charcoal font-semibold mb-2 flex items-center gap-1.5">
+              <Scale className="w-3.5 h-3.5 text-olive" /> Scientific Methodology
             </h4>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              Rule-based filtering + TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) ranking with extensible machine learning shelf-life regressors.
+            <p className="text-warmgray text-xs leading-relaxed">
+              Deterministic invariant safety screening coupled with vector-normalized TOPSIS multi-criteria ranking. Explainable decision trees replace opaque black-box heuristics.
             </p>
           </div>
 
           <div>
-            <h4 className="text-slate-200 font-semibold mb-2 flex items-center gap-1.5">
-              <Database className="w-3.5 h-3.5 text-brand-400" /> Repository Spec
+            <h4 className="text-charcoal font-semibold mb-2 flex items-center gap-1.5">
+              <Database className="w-3.5 h-3.5 text-olive" /> Navigation
             </h4>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              FastAPI + PostgreSQL + SQLAlchemy + Alembic + React + TypeScript + Tailwind CSS. Ready for Docker containerization.
-            </p>
+            <ul className="space-y-1.5 text-xs">
+              <li><Link to="/analyze" className="hover:text-olive hover:underline">New Analysis</Link></li>
+              <li><Link to="/materials" className="hover:text-olive hover:underline">Packaging Material Library</Link></li>
+              <li><Link to="/history" className="hover:text-olive hover:underline">Analysis History</Link></li>
+              <li><Link to="/architecture" className="hover:text-olive hover:underline">System Architecture & Standards</Link></li>
+            </ul>
           </div>
         </div>
 
-        <div className="border-t border-slate-900 pt-4 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+        <div className="border-t border-bordercolor/70 pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-warmgray gap-2">
           <div>
-            PackWise AI &bull; Smart India Hackathon Architecture Foundation (Milestone M0)
+            PackWise &bull; Food Packaging Intelligence Platform
           </div>
-          <div className="flex items-center gap-4">
-            <span className="text-brand-400/80 font-mono">API Prefix: /api/v1</span>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-[11px]">API: /api/v1</span>
             <span>&bull;</span>
-            <span>MIT License</span>
+            <span>Natural + Scientific + Minimal</span>
           </div>
         </div>
       </div>

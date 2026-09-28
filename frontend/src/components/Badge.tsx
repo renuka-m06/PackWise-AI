@@ -2,33 +2,38 @@ import React from 'react';
 
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'brand' | 'blue' | 'amber' | 'purple' | 'slate' | 'rose';
+  variant?: 'brand' | 'olive' | 'sand' | 'terracotta' | 'natgreen' | 'neutral' | 'blue' | 'amber' | 'purple' | 'slate' | 'rose';
   size?: 'sm' | 'md';
   className?: string;
 }
 
 export const Badge: React.FC<BadgeProps> = ({ 
   children, 
-  variant = 'brand', 
+  variant = 'olive', 
   size = 'md',
   className = '' 
 }) => {
-  const variantStyles = {
-    brand: 'bg-brand-950/70 text-brand-300 border border-brand-500/30',
-    blue: 'bg-sky-950/70 text-sky-300 border border-sky-500/30',
-    amber: 'bg-amber-950/70 text-amber-300 border border-amber-500/30',
-    purple: 'bg-purple-950/70 text-purple-300 border border-purple-500/30',
-    slate: 'bg-slate-800 text-slate-300 border border-slate-700',
-    rose: 'bg-rose-950/70 text-rose-300 border border-rose-500/30',
+  const variantStyles: Record<string, string> = {
+    brand: 'bg-olive-50 text-olive-700 border border-olive-200',
+    olive: 'bg-olive-50 text-olive-700 border border-olive-200',
+    sand: 'bg-sand-100 text-charcoal-700 border border-sand-300',
+    terracotta: 'bg-terracotta-50 text-terracotta-700 border border-terracotta-200',
+    natgreen: 'bg-natgreen-50 text-natgreen-700 border border-natgreen-200',
+    neutral: 'bg-offwhite text-charcoal-600 border border-bordercolor',
+    blue: 'bg-blue-50 text-blue-800 border border-blue-200',
+    amber: 'bg-amber-50 text-amber-800 border border-amber-200',
+    purple: 'bg-purple-50 text-purple-800 border border-purple-200',
+    slate: 'bg-offwhite text-charcoal-700 border border-bordercolor',
+    rose: 'bg-red-50 text-red-700 border border-red-200',
   };
 
   const sizeStyles = {
-    sm: 'text-xs px-2 py-0.5 rounded-full font-medium',
-    md: 'text-xs px-2.5 py-1 rounded-full font-medium',
+    sm: 'text-[11px] px-2 py-0.5 rounded font-medium',
+    md: 'text-xs px-2.5 py-1 rounded font-medium',
   };
 
   return (
-    <span className={`inline-flex items-center gap-1.5 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}>
+    <span className={`inline-flex items-center gap-1.5 ${variantStyles[variant] || variantStyles.neutral} ${sizeStyles[size]} ${className}`}>
       {children}
     </span>
   );
