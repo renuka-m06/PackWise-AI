@@ -9,7 +9,7 @@ services:
     name: packwise-backend
     runtime: python
     region: oregon
-    plan: starter
+    plan: free
     rootDir: .
     buildCommand: pip install --upgrade pip && pip install -r backend/requirements.txt
     startCommand: alembic upgrade head && uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
@@ -61,6 +61,6 @@ databases:
   # 3. Managed PostgreSQL Database
   - name: packwise-postgres
     region: oregon
-    plan: starter
+    plan: free
     databaseName: packwise_db
     user: packwise_user
