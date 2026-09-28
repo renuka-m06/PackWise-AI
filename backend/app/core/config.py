@@ -28,6 +28,13 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql://packwise_user:packwise_pass@localhost:5432/packwise_db"
 
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def assemble_database_url(cls, v: str) -> str:
+        if isinstance(v, str) and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
+
     # CORS Configuration
     CORS_ORIGINS: Union[List[str], str] = [
         "http://localhost:5173",
