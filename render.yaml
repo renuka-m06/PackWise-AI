@@ -36,8 +36,6 @@ services:
   - type: web
     name: packwise-frontend
     runtime: static
-    region: oregon
-    plan: starter
     rootDir: frontend
     buildCommand: npm ci && npm run build
     staticPublishPath: dist

@@ -1,38 +1,38 @@
 {
   "health": {
     "iterations": 10,
-    "min_ms": 11.61,
-    "max_ms": 38.9,
-    "avg_ms": 26.45
+    "min_ms": 5.04,
+    "max_ms": 21.48,
+    "avg_ms": 11.3
   },
   "readiness": {
     "iterations": 10,
-    "min_ms": 11.51,
-    "max_ms": 32.16,
-    "avg_ms": 21.11
+    "min_ms": 5.54,
+    "max_ms": 20.73,
+    "avg_ms": 10.87
   },
   "commodities": {
     "iterations": 10,
-    "min_ms": 23.41,
-    "max_ms": 42.63,
-    "avg_ms": 36.71
+    "min_ms": 7.53,
+    "max_ms": 31.12,
+    "avg_ms": 16.36
   },
   "materials": {
     "iterations": 10,
-    "min_ms": 19.22,
-    "max_ms": 48.87,
-    "avg_ms": 36.42
+    "min_ms": 7.37,
+    "max_ms": 27.51,
+    "avg_ms": 16.8
   },
   "recommendations": {
     "iterations": 10,
-    "min_ms": 28.23,
-    "max_ms": 58.87,
-    "avg_ms": 40.69
+    "min_ms": 13.73,
+    "max_ms": 27.29,
+    "avg_ms": 18.36
   },
   "history": {
     "iterations": 10,
-    "min_ms": 28.83,
-    "max_ms": 49.66,
-    "avg_ms": 39.2
+    "min_ms": 7.93,
+    "max_ms": 29.16,
+    "avg_ms": 16.72
   }
 }
